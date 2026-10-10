@@ -11,20 +11,36 @@ body { margin: 0; background: var(--portrait-background); }
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  perspective: 1400px;
-  background: var(--portrait-background);
-  touch-action: none;
+  background: var(--portrait-background) var(--portrait-backdrop) center / cover no-repeat;
+  touch-action: pan-y pinch-zoom;
   user-select: none;
   -webkit-user-select: none;
 }
-.portrait-canvas { position: absolute; inset: 0; transform-origin: 50% 60%; }
+.portrait-canvas {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: min(150dvh, 1152px);
+  aspect-ratio: 3 / 2;
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+/* The background is outside this layer and never moves. */
+.portrait-canvas.is-animated { animation: breathe 5s ease-in-out infinite; }
+@keyframes breathe {
+  0%, 100% { transform: translateX(-50%) scaleY(1); }
+  50% { transform: translateX(-50%) scaleY(1.0015); }
+}
+@media (max-width: 600px) {
+  .portrait-canvas { width: min(150dvh, 170vw); }
+}
 .portrait-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: var(--portrait-position);
+  object-fit: contain;
   visibility: hidden;
   pointer-events: none;
 }
@@ -59,5 +75,5 @@ body { margin: 0; background: var(--portrait-background); }
   border: 0;
 }
 @media (prefers-reduced-motion: reduce) {
-  .portrait-canvas { transform: none !important; }
+  .portrait-canvas { animation: none !important; }
 }

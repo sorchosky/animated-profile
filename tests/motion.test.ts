@@ -26,7 +26,28 @@ test('chooses portraits by screen direction and keeps a stable frame near bounda
   const frames = [neutral, right, upperLeft];
   assert.equal(selectFrame(frames, { x: 1, y: 0 }), right);
   assert.equal(selectFrame(frames, { x: -0.9, y: -0.8 }), upperLeft);
-  assert.equal(selectFrame(frames, { x: 0.51, y: 0 }, neutral), neutral);
+  assert.equal(selectFrame(frames, { x: 0.505, y: 0 }, neutral), neutral);
   assert.equal(selectFrame(frames, { x: 0.6, y: 0 }, neutral), right);
   assert.equal(selectFrame([neutral], { x: 1, y: 1 }), neutral);
+});
+
+test('tracking is centered at the drawn eye position, with independent distances to viewport edges', () => {
+  const viewport = { left: 0, top: 0, width: 1200, height: 800 };
+  const eye = { x: 550, y: 280 };
+  assert.deepEqual(normalizePointer(550, 280, viewport, eye), { x: 0, y: 0 });
+  assert.deepEqual(normalizePointer(0, 0, viewport, eye), { x: -1, y: -1 });
+  assert.deepEqual(normalizePointer(1200, 800, viewport, eye), { x: 1, y: 1 });
+  assert.deepEqual(normalizePointer(875, 540, viewport, eye), { x: 0.5, y: 0.5 });
+});
+
+test('half-step poses are reachable without flickering around their boundaries', () => {
+  const frames = [-1, -0.5, 0, 0.5, 1].flatMap(y => [-1, -0.5, 0, 0.5, 1].map(x => ({ x, y, src: `${x}:${y}` })));
+  for (const frame of frames) assert.equal(selectFrame(frames, frame), frame);
+  const neutral = frames[12];
+  const halfRight = frames[13];
+  assert.equal(selectFrame(frames, { x: 0.26, y: 0 }, neutral), neutral);
+  assert.equal(selectFrame(frames, { x: 0.29, y: 0 }, neutral), halfRight);
+  assert.equal(selectFrame(frames, { x: 0.24, y: 0 }, halfRight), halfRight);
+  assert.equal(selectFrame(frames, { x: 0.21, y: 0 }, halfRight), neutral);
+  assert.equal(selectFrame([neutral], { x: 1, y: 1 }, halfRight), neutral);
 });
