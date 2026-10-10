@@ -1,75 +1,53 @@
 # Animated profile
 
-A single, full-viewport portrait of Steve against an olive-green background. Built with Astro, TypeScript, and CSS; the page is statically rendered and the interaction uses native Pointer Events and requestAnimationFrame. No backend, React runtime, or animation library is needed.
+Steve's 25-pose transparent portrait over a static olive studio background. Built with Astro, TypeScript, native Pointer Events and requestAnimationFrame. No backend or animation runtime is required.
 
-## Run
+## Run and validate
 
 Use Node 24 (minimum 22.12).
 
 ```sh
 npm ci
 npm run dev
-```
-
-Validation and static output:
-
-```sh
 npm run check
 npm test
 npm run build
-npm run preview
 ```
 
-`dist/` can be deployed to any static host. `.openai/hosting.json` identifies the private hosted preview. The GitHub workflow runs type checks, motion tests, and a production build; it does not deploy or merge the PR.
+`dist/` deploys to any static host. The existing `.openai/hosting.json` retains the hosted Site identity. The GitHub workflow runs checks, tests and a production build; opening or merging a PR does not itself publish a hosted preview.
 
 ## Interaction
 
-- Mouse movement maps to screen directions. Touch and pen follow a primary drag with pointer capture, then ease back to neutral on release or cancellation.
-- Leaving the page, resizing, losing focus, or pausing returns the portrait to neutral.
-- The motion loop stops when the pose settles. Reduced-motion preferences keep a static neutral portrait; the accessible pause control is usable with the keyboard.
-- Without JavaScript, the portrait still renders. Missing directional assets fall back to available decoded portraits.
+- Mouse position maps from the portrait's eye anchor toward each viewport edge. The 5 × 5 grid samples each axis at -1, -0.5, 0, 0.5 and 1 in viewer coordinates; images are never mirrored.
+- Targets ease over 100 ms. Nearest-pose selection uses a 0.02 squared-distance margin to prevent boundary chatter. There are no crossfades or synthesized facial morphs.
+- Primary touch and pen drags use pointer capture. Release/cancellation settles back to neutral. Native vertical scrolling and pinch zoom take precedence when the browser claims the gesture. Controls are excluded from capture.
+- Neutral-only blinking uses half / closed / half at 35 / 70 / 35 ms, with randomized 3.5–7 second pauses. Moving into a directional pose cancels the blink. The foreground has a restrained 5-second breathing cycle; the background stays still.
+- Pause, reduced motion, hidden/offscreen pages and window blur stop animation. Reduced motion is observed live. Without JavaScript, the transparent neutral and background still render.
+- Leaving the portrait, resizing or ending a drag resets the target. There is no placeholder CSS head tilt.
 
-The supplied JPEG is a **temporary composite**: its background and shoulders move with its gentle CSS tilt. True directional head movement starts when directional portraits are added. No head isolation or new image assets have been generated.
+## Assets and loading
 
-## Add directional portraits
+`public/portraits/gaze-v2/` contains 27 WebP images in each tier (25 gaze poses and two neutral blink states):
 
-Place the files in `public/portraits/`, then edit `src/portrait/config.ts`. URLs omit `public/`. Direction coordinates describe **the position of the visitor's cursor on the screen**, not the character's anatomical left and right.
+| Tier | Dimensions | Total WebP bytes | Approx. decoded RGBA memory |
+| --- | --- | ---: | ---: |
+| standard | 768 × 512 | 1,680,192 | 40.5 MiB |
+| large | 1152 × 768 | 3,234,102 | 91.1 MiB |
 
-Recommended first set: neutral plus eight surrounding poses. These names are a suggested contract; actual filenames are configured in one place.
+Fine-pointer, hover-capable screens at least 900 CSS pixels wide choose large; other devices use standard. The tier stays fixed for the page visit so resizing does not retain duplicate decoded sets. The standard neutral is the immediate HTML fallback; large neutral replaces it only after decoding succeeds.
 
-| Filename | Cursor direction | x | y |
-| --- | --- | --- | --- |
-| neutral.jpeg | Center | 0 | 0 |
-| up-left.webp | Upper left | -1 | -1 |
-| up.webp | Up | 0 | -1 |
-| up-right.webp | Upper right | 1 | -1 |
-| left.webp | Left | -1 | 0 |
-| right.webp | Right | 1 | 0 |
-| down-left.webp | Lower left | -1 | 1 |
-| down.webp | Down | 0 | 1 |
-| down-right.webp | Lower right | 1 | 1 |
+At most three assets decode concurrently. The eight immediate neighbors precede the outer ring. A failed image never enters selection, and pause/reduced motion prevents additional queued work from starting. Decodes already in flight may finish. RequestAnimationFrame stops once the pointer target settles.
 
-Example configuration:
+The PNG masters remain in the delivered asset archive and are intentionally excluded from this repository and the web build. `docs/gaze-v2/manifest.json` records their provenance and hashes, plus every shipped WebP URL and hash. `src/portrait/config.ts` derives the coordinate grid from stable row/column filenames. `public/portraits/background.webp` is the supplied olive background, independently compressed and held static.
 
-```ts
-frames: [
-  { x: -1, y: -1, src: '/portraits/up-left.webp' },
-  { x: 0, y: -1, src: '/portraits/up.webp' },
-  { x: 1, y: -1, src: '/portraits/up-right.webp' },
-  { x: -1, y: 0, src: '/portraits/left.webp' },
-  { x: 1, y: 0, src: '/portraits/right.webp' },
-  { x: -1, y: 1, src: '/portraits/down-left.webp' },
-  { x: 0, y: 1, src: '/portraits/down.webp' },
-  { x: 1, y: 1, src: '/portraits/down-right.webp' },
-],
-```
+## Visual QA status
 
-Neutral is automatically included. All frames decode before the directional set becomes active, and composite tilt is automatically disabled as soon as a directional frame is available. Frame selection uses the nearest supplied direction with a small boundary margin to avoid flicker. More intermediate directions can be added without changing the controller. This is discrete pose selection; it does not morph faces or synthesize missing poses.
+**Lighting consistency is still unresolved.** The generated images are review candidates, not frames rendered from one fixed 3D scene. The original set and intermediate poses have jacket/lighting differences and uneven geometric pose spacing. The two corrected down-right candidates also retain color differences. This integration does not retouch, normalize, or certify their lighting.
 
-For clean swaps, export the same canvas size, framing, background, lighting, and shoulder alignment across all images. Keep the head in the same region and leave enough room around the hair for mobile cropping. JPEG/WebP full portraits work; transparent full portraits can also reveal the configured green background. Keep assets compressed: all directional frames are decoded for seamless swaps, so unusually large sets increase memory use.
+See [the QA report](docs/gaze-v2/QA-REPORT.md), [frame grid](docs/gaze-v2/review-grid.jpg), and [asset handoff](docs/gaze-v2/IMPLEMENTATION-PLAN.md). Review slow neighboring-pose transitions at the actual hero size before approving visual polish. A fixed-camera, fixed-light 3D rig is the reliable route to guaranteed scene-lighting consistency and continuous movement.
 
-The placeholder is 1536 × 1024. Update `width`, `height`, `objectPosition`, and `background` when final assets arrive. `object-fit: cover` fills the viewport and crops the sides on narrow phones; the centered face is prioritized.
+Automated coverage checks half-step selection, eye-relative mapping, damping, loading concurrency/resume/failure, controller pause/reduced-motion/blink/touch lifecycles, and all shipped asset hashes. Controller lifecycle tests use a simulated DOM and clock; they do not replace real browser/device visual QA.
 
 ## Scope
 
-This scaffold contains the portrait interaction only. Portfolio copy, navigation, projects, analytics, and contact links can be added when their requirements are supplied.
+This page is the portrait interaction. Portfolio copy, project content, navigation and contact links remain separate work.
