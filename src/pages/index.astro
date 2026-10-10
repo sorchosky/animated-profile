@@ -1,0 +1,36 @@
+---
+import { portraitConfig } from '../portrait/config';
+import '../styles/global.css';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={portraitConfig.background} />
+    <meta name="description" content="Steve Orchosky's interactive portrait." />
+    <title>Steve Orchosky — Animated Profile</title>
+  </head>
+  <body style={`--portrait-background: ${portraitConfig.background}; --portrait-position: ${portraitConfig.objectPosition}`}>
+    <main class="portrait-stage" data-portrait-stage aria-label="Steve Orchosky's interactive portrait">
+      <h1 class="sr-only">Steve Orchosky</h1>
+      <div class="portrait-canvas" data-portrait-canvas>
+        <img
+          class="portrait-image is-visible"
+          data-neutral-portrait
+          src={portraitConfig.neutral}
+          alt={portraitConfig.alt}
+          width={portraitConfig.width}
+          height={portraitConfig.height}
+          fetchpriority="high"
+          decoding="async"
+          draggable="false"
+        />
+      </div>
+    </main>
+    <button class="motion-toggle" data-motion-toggle type="button" aria-pressed="false" hidden>Pause motion</button>
+    <script>
+      import '../portrait/controller';
+    </script>
+  </body>
+</html>
