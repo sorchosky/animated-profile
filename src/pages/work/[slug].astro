@@ -15,13 +15,13 @@ const { project } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={project.subhead} />
-    <title>{project.title} — Steve Orchosky</title>
+    <title>{project.title} | Steve Orchosky</title>
     <Fonts />
   </head>
   <body>
     <main class="case-study-shell">
       <a class="button button-secondary" href={`/#${project.slug}`}>Back to work</a>
-      <p class="project-eyebrow">{project.eyebrow}</p>
+      <p class="project-meta">{project.meta}</p>
       <h1 class="project-title">{project.title}</h1>
       <p class="project-subhead">{project.subhead}</p>
       <p>Full case study coming soon.</p>

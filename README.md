@@ -66,8 +66,9 @@ python scripts/cutout_frames.py
 The home page is a deck of full-viewport panels: the hero, then one splash per project.
 
 - `src/styles/tokens.css` holds the primitives and semantic roles. `--color-text` (cream drawn from the T-shirt) is the type token used across the olive surfaces. `--color-action-primary` is burnt sienna.
-- The hero layers vignette backdrop, the `Steve Orchosky` masthead (DM Serif Display, fitted to the viewport width through `--masthead-em`), the portrait, then the tagline and actions. `--figure-h` sizes the portrait, and the masthead and copy are positioned from it, so the head overlaps the masthead at every viewport. Mobile centers the figure. 768 px and up moves it to `--figure-x: 64%` with the copy in the left third.
-- Root `scroll-snap-type: y mandatory` handles touch, keyboard and scrollbar. `src/scripts/sections.ts` turns each wheel gesture into one panel step (locked through trackpad inertia), updates the section dots and runs only the current panel's animation.
+- The hero layers vignette backdrop, the `Steve Orchosky` masthead, the portrait, then the tagline and actions. The masthead (DM Serif Display) pins near the top and is fitted to the viewport width through `--masthead-em`, or `--masthead-em-stacked` when it breaks onto two lines below 768 px. `--figure-h` is solved from the masthead's bottom edge, so the hair only grazes the baseline (`--figure-overlap`). Copy is left-aligned at every size. Mobile centers the figure with the copy over a bottom scrim. From 768 px the figure moves to `--figure-x: 64%` and the copy locks up under the masthead in the left column.
+- Type is self-hosted through Fontsource: DM Serif Display for display, Geist for UI and body. The masthead face is preloaded.
+- Root `scroll-snap-type: y mandatory` handles touch, keyboard and scrollbar. `src/scripts/sections.ts` turns each wheel gesture into one panel step (locked through trackpad inertia), updates the section dots, runs only the current panel's animation and reveals its copy on arrival.
 - Project copy lives in `src/content/projects.ts`. Subheads are drafts and every `[TK]` is a number to replace. `src/components/ProjectVisual.astro` holds placeholder SVG motion studies, and `/work/<slug>/` pages are stubs. `/resume.pdf` is linked but not yet committed.
 
 ## Known limits

@@ -34,15 +34,22 @@ h1, h2, p { margin: 0; }
 
 /*
  * Layers, back to front: vignette backdrop, masthead, portrait cutout, copy.
- * --figure-h sizes the 3:2 portrait; the masthead and copy are placed relative to it
- * so the head always overlaps the masthead, whatever the viewport.
+ * The masthead pins near the top. --figure-h is solved from the masthead's bottom
+ * edge so the hair only grazes the baseline (--figure-overlap, in masthead ems),
+ * capped by --figure-max on narrow screens.
  */
 .hero {
-  --figure-h: min(66dvh, 140vw);
+  /* Mobile: the name stacks on two lines, each sized to the longer "Orchosky". */
+  --masthead-lines: 2;
+  --masthead-size: calc((100vw - 2 * var(--gutter)) / var(--masthead-em-stacked));
+  --masthead-top: max(var(--space-3), env(safe-area-inset-top));
+  --masthead-leading: 0.88;
+  --masthead-bottom: calc(var(--masthead-top) + var(--masthead-size) * var(--masthead-leading) * var(--masthead-lines));
+  --figure-overlap: 0.12;
+  --figure-max: 165vw;
+  /* 1.04 accounts for the transparent band above the hair in each frame. */
+  --figure-h: min(calc((100dvh - var(--masthead-bottom) + var(--masthead-size) * var(--figure-overlap)) * 1.04), var(--figure-max));
   --figure-x: 50%;
-  /* Masthead bottom edge, as a fraction of figure height from the floor. Higher on mobile,
-     where the smaller type would otherwise disappear behind the face. */
-  --masthead-floor: 0.9;
   background:
     radial-gradient(ellipse calc(var(--figure-h) * 1.1) calc(var(--figure-h) * 0.95) at var(--figure-x) calc(100% - var(--figure-h) * 0.62),
       var(--color-surface-center) 0%, var(--color-surface-mid) 38%, var(--color-surface) 70%, var(--color-surface-edge) 100%),
@@ -53,21 +60,20 @@ h1, h2, p { margin: 0; }
 }
 .masthead {
   position: absolute;
+  z-index: 1;
+  top: var(--masthead-top);
   left: 0;
   right: 0;
-  /* The head always covers the lower part of the letters. */
-  bottom: calc(var(--figure-h) * var(--masthead-floor));
-  z-index: 1;
   padding-inline: var(--gutter);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: calc((100vw - 2 * var(--gutter)) / var(--masthead-em));
-  line-height: 0.82;
+  font-size: var(--masthead-size);
+  line-height: var(--masthead-leading);
   letter-spacing: -0.01em;
-  text-align: center;
   white-space: nowrap;
   color: var(--color-text);
 }
+.masthead span { display: block; }
 .portrait-canvas {
   position: absolute;
   z-index: 2;
@@ -106,43 +112,56 @@ h1, h2, p { margin: 0; }
   right: 0;
   bottom: 0;
   display: grid;
-  justify-items: center;
+  justify-items: start;
   gap: var(--space-3);
   padding: var(--space-8) var(--gutter) max(var(--space-5), env(safe-area-inset-bottom));
-  text-align: center;
   /* Scrim keeps the tagline readable over the jacket on mobile. */
-  background: linear-gradient(to bottom, transparent, rgb(46 41 18 / 72%) 45%, rgb(46 41 18 / 88%));
+  background: linear-gradient(to bottom, transparent, rgb(46 41 18 / 72%) 40%, rgb(46 41 18 / 90%));
 }
 .tagline {
-  max-width: 20ch;
-  font-family: var(--font-display);
+  max-width: 28ch;
+  font-size: var(--type-tagline);
   font-weight: 400;
-  font-size: var(--type-title-sm);
-  line-height: 1.12;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
   text-wrap: balance;
 }
-.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
 @media (min-width: 768px) {
   .hero {
-    --figure-h: min(88dvh, 72vw);
+    --masthead-lines: 1;
+    --masthead-size: calc((100vw - 2 * var(--gutter)) / var(--masthead-em));
+    --masthead-top: clamp(var(--space-4), 6dvh, var(--space-8));
+    --figure-overlap: 0.18;
+    --figure-max: 85vw;
     --figure-x: 64%;
-    --masthead-floor: 0.7;
   }
+  .masthead span { display: inline; }
   .hero-copy {
-    /* Left third, locked up directly under the masthead. */
-    top: calc(100% - var(--figure-h) * var(--masthead-floor) + var(--space-5));
+    /* Left column, locked up under the masthead and aligned to its first letter. */
+    top: calc(var(--masthead-bottom) + var(--space-5));
     right: auto;
     bottom: auto;
-    width: clamp(21rem, 100% / 3 + var(--gutter), 34rem);
-    justify-items: start;
+    width: clamp(23rem, 100% / 3 + var(--gutter), 34rem);
     padding: 0 0 0 var(--gutter);
-    text-align: left;
     background: none;
   }
-  .tagline { font-size: clamp(var(--type-title-sm), 3.4vw, 3.25rem); }
-  .actions { justify-content: flex-start; }
 }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero { --figure-x: 66%; }
+}
+
+/* Entry: the masthead rises in, then the copy follows. */
+@media (prefers-reduced-motion: no-preference) {
+  .masthead span { animation: rise-em 900ms var(--ease-out) both; }
+  .masthead span + span { animation-delay: 80ms; }
+  .hero-copy > * { animation: rise 700ms var(--ease-out) both; }
+  .hero-copy > :nth-child(1) { animation-delay: 280ms; }
+  .hero-copy > :nth-child(2) { animation-delay: 380ms; }
+}
+@keyframes rise-em { from { opacity: 0; transform: translateY(0.18em); } }
+@keyframes rise { from { opacity: 0; transform: translateY(var(--space-2)); } }
 
 /* ---------- Buttons ---------- */
 
@@ -217,13 +236,7 @@ h1, h2, p { margin: 0; }
 .project-visual { display: grid; place-items: center; min-height: 0; }
 .project-visual svg { width: min(100%, 560px); height: 100%; max-height: 100%; }
 .project-copy { display: grid; justify-items: start; gap: var(--space-2); max-width: 36rem; }
-.project-eyebrow {
-  font-size: var(--type-label);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
+.project-meta { font-size: var(--type-label); color: var(--color-text-muted); }
 .project-title {
   font-family: var(--font-display);
   font-weight: 400;
@@ -249,6 +262,24 @@ h1, h2, p { margin: 0; }
 .project .project-visual * { animation-play-state: paused; }
 .project.is-current .project-visual * { animation-play-state: running; }
 
+/* Each snap reveals the arriving panel: copy staggers up, the visual settles in.
+   Gated on .deck-ready so content never hides without the script. */
+@media (prefers-reduced-motion: no-preference) {
+  .deck-ready .project-copy > *,
+  .deck-ready .project-visual {
+    opacity: 0;
+    transition: opacity 500ms var(--ease-out), transform 700ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 70ms + 120ms);
+  }
+  .deck-ready .project-copy > * { transform: translateY(var(--space-2)); }
+  .deck-ready .project-visual { transform: scale(0.97); --i: 0; }
+  .project-copy > :nth-child(2) { --i: 1; }
+  .project-copy > :nth-child(3) { --i: 2; }
+  .project-copy > :nth-child(4) { --i: 3; }
+  .deck-ready .project.is-current .project-copy > *,
+  .deck-ready .project.is-current .project-visual { opacity: 1; transform: none; }
+}
+
 /* ---------- Utilities ---------- */
 
 .motion-toggle {
@@ -265,6 +296,9 @@ h1, h2, p { margin: 0; }
   font: inherit;
   font-size: 12px;
   cursor: pointer;
+}
+@media (min-width: 768px) {
+  .motion-toggle { top: auto; bottom: max(var(--space-3), env(safe-area-inset-bottom)); right: max(var(--space-4), env(safe-area-inset-right)); }
 }
 .motion-toggle:hover { background: var(--color-surface-deep); }
 .motion-toggle:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }

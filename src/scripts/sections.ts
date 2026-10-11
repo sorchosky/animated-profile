@@ -53,6 +53,8 @@ window.addEventListener('wheel', (event) => {
 }, { passive: false });
 
 if (panels.length && 'IntersectionObserver' in window) {
+  // Panels hide their content for the snap reveal only once this script is running.
+  document.documentElement.classList.add('deck-ready');
   // A panel counts as current once it fills most of the viewport, which happens
   // exactly once per snap.
   const observer = new IntersectionObserver((entries) => {

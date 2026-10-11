@@ -14,13 +14,13 @@ const sections = [{ id: 'intro', label: 'Intro' }, ...projects.map(({ slug, titl
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content={portraitConfig.background} />
     <meta name="description" content="Steve Orchosky designs brand systems, product UI, and the code that ships them." />
-    <title>Steve Orchosky — Product Designer</title>
+    <title>Steve Orchosky | Product Designer</title>
     <Fonts />
   </head>
   <body>
     <main>
       <section id="intro" class="panel hero" data-panel data-portrait-stage aria-label="Introduction">
-        <h1 class="masthead">Steve Orchosky</h1>
+        <h1 class="masthead"><span>Steve</span> <span>Orchosky</span></h1>
         <div class="portrait-canvas" data-portrait-canvas>
           <img
             class="portrait-image is-visible"
@@ -48,8 +48,8 @@ const sections = [{ id: 'intro', label: 'Intro' }, ...projects.map(({ slug, titl
         <section id={project.slug} class="panel project" data-panel aria-labelledby={`${project.slug}-title`}>
           <ProjectVisual kind={project.visual} />
           <div class="project-copy">
-            <p class="project-eyebrow">
-              <span class="sr-only">Project {index + 1} of {projects.length}: </span>{project.eyebrow}
+            <p class="project-meta">
+              <span class="sr-only">Project {index + 1} of {projects.length}: </span>{project.meta}
             </p>
             <h2 class="project-title" id={`${project.slug}-title`}>{project.title}</h2>
             <p class="project-subhead">{project.subhead}</p>
