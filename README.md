@@ -1,6 +1,6 @@
 # Animated profile
 
-Steve's 25-pose transparent portrait over a static olive studio background. Built with Astro, TypeScript, native Pointer Events and requestAnimationFrame. No backend or animation runtime is required.
+Steve's cursor-tracking portrait, built from 78 stills extracted from one locked-off gaze video. Built with Astro, TypeScript, native Pointer Events and requestAnimationFrame. No backend or animation runtime is required.
 
 ## Run and validate
 
@@ -14,40 +14,52 @@ npm test
 npm run build
 ```
 
-`dist/` deploys to any static host. The existing `.openai/hosting.json` retains the hosted Site identity. The GitHub workflow runs checks, tests and a production build; opening or merging a PR does not itself publish a hosted preview.
+`dist/` deploys to any static host. The existing `.openai/hosting.json` retains the hosted Site identity. The GitHub workflow runs checks, tests and a production build; opening or merging a PR does not itself publis## Interaction
 
-## Interaction
+- Mouse position maps from the portrait's eye anchor toward each viewport edge, in viewer coordinates from -1 to 1. Images are never mirrored.
+- Each still carries the head pose measured from its video frame. A full head turn sits at radius 0.85, so the head turns before the cursor reaches the edge.
+- Targets ease over 120 ms, and the nearest frame is drawn on every animation frame. A new frame must be at least 0.015 closer than the current one, which stops boundary chatter without lagging more than one step behind.
+- Neighboring frames cut. A jump longer than 0.15 (neutral to a full turn, where the video has no in-between frames) crossfades for 70–150 ms, scaled by distance. The outgoing frame fades on top of the incoming one, so the opaque frames never show the page through.
+- Primary touch and pen drags use pointer capture. Release or cancellation settles back to neutral. Native vertical scrolling and pinch zoom take precedence when the browser claims the gesture. Controls are excluded from capture.
+- Neutral-only blinking uses half / closed / half at 35 / 70 / 35 ms, with randomized 3.5–7 second pauses. Moving into a directional pose cancels the blink. The foreground has a restrained 5-second breathing cycle, and the page backdrop stays still.
+- Pause, reduced motion, hidden or offscreen pages and window blur stop animation. Reduced motion is observed live. Without JavaScript, the neutral still renders.
+- Leaving the portrait, resizing or ending a drag resets the target.
 
-- Mouse position maps from the portrait's eye anchor toward each viewport edge. The 5 × 5 grid samples each axis at -1, -0.5, 0, 0.5 and 1 in viewer coordinates; images are never mirrored.
-- Targets ease over 100 ms. Nearest-pose selection uses a 0.02 squared-distance margin to prevent boundary chatter. There are no crossfades or synthesized facial morphs.
-- Primary touch and pen drags use pointer capture. Release/cancellation settles back to neutral. Native vertical scrolling and pinch zoom take precedence when the browser claims the gesture. Controls are excluded from capture.
-- Neutral-only blinking uses half / closed / half at 35 / 70 / 35 ms, with randomized 3.5–7 second pauses. Moving into a directional pose cancels the blink. The foreground has a restrained 5-second breathing cycle; the background stays still.
-- Pause, reduced motion, hidden/offscreen pages and window blur stop animation. Reduced motion is observed live. Without JavaScript, the transparent neutral and background still render.
-- Leaving the portrait, resizing or ending a drag resets the target. There is no placeholder CSS head tilt.
+## Source video and extraction
+
+`scripts/extract_gaze_frames.py` rebuilds every asset from the source clip (a 10 s, 24 fps, 1152 × 768 locked-off shot that sweeps the head around a full loop and back to neutral):
+
+1. MediaPipe Face Landmarker measures head yaw and pitch on all 243 frames. A three-frame median removes detector jitter.
+2. Frames with a mean eye-blink score above 0.35 are dropped (16 frames across three blinks).
+3. Poses are normalized per half-axis, since the sweep travels further down than up.
+4. A frame is kept only when it is at least 0.05 from every kept frame, so neighbors differ by about 1.5° of head turn. Static holds collapse to one frame.
+5. Frames are ordered farthest-point first. The first 16 loads cover every direction coarsely and later loads fill the gaps.
+6. The blink pair comes from video frames 14 and 16. Their eye region is aligned to the neutral frame with a landmark similarity transform and feather-blended, which removes the small head dip the video has during its blink.
+
+```sh
+pip install mediapipe opencv-python-headless numpy pillow   # plus ffmpeg on PATH
+python scripts/extract_gaze_frames.py gaze-sweep.mp4 face_landmarker.task
+```
+
+The script writes `public/portraits/gaze-video/`, `src/portrait/frames.json` (coordinates in load order plus the eye anchor) and `docs/gaze-video/` (`manifest.json` with settings, hashes and blink provenance, and `poses.json` with every frame's measured pose). The source clip and model are not committed.
 
 ## Assets and loading
 
-`public/portraits/gaze-v2/` contains 27 WebP images in each tier (25 gaze poses and two neutral blink states):
+| Tier | Dimensions | Files | Total WebP bytes | Approx. decoded RGBA memory |
+| --- | --- | ---: | ---: | ---: |
+| standard | 768 × 512 | 80 | ~1.3 MB | 120 MiB |
+| large | 1152 × 768 (source resolution) | 80 | ~2.1 MB | 270 MiB |
 
-| Tier | Dimensions | Total WebP bytes | Approx. decoded RGBA memory |
-| --- | --- | ---: | ---: |
-| standard | 768 × 512 | 1,680,192 | 40.5 MiB |
-| large | 1152 × 768 | 3,234,102 | 91.1 MiB |
+Fine-pointer, hover-capable screens at least 900 CSS pixels wide get large. Other devices get standard. The tier stays fixed for the page visit. The standard neutral is the immediate HTML fallback. The large neutral replaces it only after decoding succeeds.
 
-Fine-pointer, hover-capable screens at least 900 CSS pixels wide choose large; other devices use standard. The tier stays fixed for the page visit so resizing does not retain duplicate decoded sets. The standard neutral is the immediate HTML fallback; large neutral replaces it only after decoding succeeds.
+At most four assets decode at once. A failed image never enters selection, and pause or reduced motion stops queued work from starting. RequestAnimationFrame stops once the pointer target settles.
 
-At most three assets decode concurrently. The eight immediate neighbors precede the outer ring. A failed image never enters selection, and pause/reduced motion prevents additional queued work from starting. Decodes already in flight may finish. RequestAnimationFrame stops once the pointer target settles.
+The frames are opaque, with the video's own backdrop. Their sides and top are feathered into a page gradient sampled from a clean backdrop plate (the per-pixel median across the clip). A strip above the frame continues its top-edge colors, for viewports taller than 3:2.
 
-The PNG masters remain in the delivered asset archive and are intentionally excluded from this repository and the web build. `docs/gaze-v2/manifest.json` records their provenance and hashes, plus every shipped WebP URL and hash. `src/portrait/config.ts` derives the coordinate grid from stable row/column filenames. `public/portraits/background.webp` is the supplied olive background, independently compressed and held static.
+## Known limits
 
-## Visual QA status
+- **The interior is sparsely sampled.** The video sweeps a ring of full turns plus neutral. The only in-between frames are on the down-left return path. Cursor positions between the face and a full turn crossfade between neutral and the ring instead of turning gradually. Closing this gap needs a second clip with slow half-turns from neutral.
+- The down-right to down stretch (frames 171–177) loses six frames to a blink, so that arc steps more coarsely.
+- Head pose drives the mapping. Eye-only motion during held head poses (frames 150–169) collapses to one frame.
 
-**Lighting consistency is still unresolved.** The generated images are review candidates, not frames rendered from one fixed 3D scene. The original set and intermediate poses have jacket/lighting differences and uneven geometric pose spacing. The two corrected down-right candidates also retain color differences. This integration does not retouch, normalize, or certify their lighting.
-
-See [the QA report](docs/gaze-v2/QA-REPORT.md), [frame grid](docs/gaze-v2/review-grid.jpg), and [asset handoff](docs/gaze-v2/IMPLEMENTATION-PLAN.md). Review slow neighboring-pose transitions at the actual hero size before approving visual polish. A fixed-camera, fixed-light 3D rig is the reliable route to guaranteed scene-lighting consistency and continuous movement.
-
-Automated coverage checks half-step selection, eye-relative mapping, damping, loading concurrency/resume/failure, controller pause/reduced-motion/blink/touch lifecycles, and all shipped asset hashes. Controller lifecycle tests use a simulated DOM and clock; they do not replace real browser/device visual QA.
-
-## Scope
-
-This page is the portrait interaction. Portfolio copy, project content, navigation and contact links remain separate work.
+Automated coverage checks eye-relative mapping, damping, dense-frame hysteresis, crossfade timing, ring coverage, loading concurrency, resume and failure, controller pause, reduced motion, blink and touch lifecycles, and all shipped asset hashes. Controller tests use a simulated DOM and clock. They don't replace real browser and device QA.

@@ -1,7 +1,12 @@
 :root {
   color-scheme: dark;
   font-family: system-ui, sans-serif;
-  background: #626034;
+  background: #4a4220;
+  /* Sampled from the video's backdrop: warm center falling off to olive edges. */
+  --backdrop-center: #5d5225;
+  --backdrop-mid: #544a21;
+  --backdrop-edge: #4a4220;
+  --backdrop-corner: #423b19;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--portrait-background); }
@@ -11,7 +16,9 @@ body { margin: 0; background: var(--portrait-background); }
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background: var(--portrait-background) var(--portrait-backdrop) center / cover no-repeat;
+  background:
+    radial-gradient(ellipse 70% 85% at 50% 30%, var(--backdrop-center) 0%, var(--backdrop-mid) 40%, var(--backdrop-edge) 72%, var(--backdrop-corner) 100%),
+    var(--portrait-background);
   touch-action: pan-y pinch-zoom;
   user-select: none;
   -webkit-user-select: none;
@@ -20,13 +27,28 @@ body { margin: 0; background: var(--portrait-background); }
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: min(150dvh, 1152px);
+  width: min(150dvh, 1536px);
   aspect-ratio: 3 / 2;
   transform: translateX(-50%);
   transform-origin: 50% 100%;
   pointer-events: none;
 }
-/* The background is outside this layer and never moves. */
+/* Continues the frame's top edge upward when the viewport is taller than the frame. */
+.portrait-canvas::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 94%;
+  height: 100dvh;
+  /* Column profile sampled from the video's clean backdrop plate, darkening upward. */
+  background:
+    linear-gradient(to top, transparent, rgb(66 59 25 / 60%) 70%),
+    linear-gradient(to right, #4b431f, #504922 8%, #544a20 16%, #5c5125 25%, #615527 33%, #625527 50%, #5d5226 66%, #564d23 75%, #534a23 83%, #4b431f 91%, #473f1c);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+}
+/* The page backdrop is outside this layer and never moves. */
 .portrait-canvas.is-animated { animation: breathe 5s ease-in-out infinite; }
 @keyframes breathe {
   0%, 100% { transform: translateX(-50%) scaleY(1); }
@@ -41,10 +63,18 @@ body { margin: 0; background: var(--portrait-background); }
   width: 100%;
   height: 100%;
   object-fit: contain;
+  /* Video frames are opaque; feather the sides and top into the page backdrop. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 6%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 6%);
+  mask-composite: intersect;
   visibility: hidden;
   pointer-events: none;
 }
-.portrait-image.is-visible { visibility: visible; }
+.portrait-image.is-visible { visibility: visible; z-index: 1; }
+/* Opaque frames: the outgoing frame sits on top and fades to reveal the incoming one. */
+.portrait-image.is-leaving { visibility: visible; z-index: 2; animation: frame-out var(--fade-ms, 120ms) linear forwards; }
+@keyframes frame-out { to { opacity: 0; } }
 .motion-toggle {
   position: fixed;
   right: max(20px, env(safe-area-inset-right));

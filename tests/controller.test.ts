@@ -26,6 +26,7 @@ class ElementStub extends Surface {
   captures = new Set<number>();
   src = ''; alt = ''; className = ''; hidden = false; disabled = false; textContent = ''; draggable = false;
   control = false; removed = false;
+  style = { setProperty() {} };
   append(child: ElementStub) { this.children.push(child); }
   setAttribute(key: string, value: string) { this.attrs.set(key, value); }
   removeAttribute(key: string) { this.attrs.delete(key); }
@@ -63,17 +64,30 @@ function setup(reduced = false, failedSuffix = '') {
   return { stage, canvas, neutral, button, media, document, window, timers, raf, settle, visible, decodes: () => decodes };
 }
 const flush = () => new Promise(resolve => setImmediate(resolve));
+const frames = config.gazeFrames('large');
+const neutralSrc = config.assetUrl(config.portraitConfig.neutralName, 'large');
+const eyeY = 768 * config.portraitConfig.eyeAnchor.y;
+/** The frame tracking may settle on: the nearest one, or a neighbor still inside the hysteresis margin. */
+function assertTracks(src: string | undefined, target: { x: number; y: number }) {
+  const frame = frames.find(f => f.src === src);
+  assert.ok(frame, `visible frame ${src} is a tracking frame`);
+  const nearest = Math.min(...frames.map(f => motion.poseDistance(f, target)));
+  assert.ok(motion.poseDistance(frame, target) <= nearest + config.portraitConfig.frameMargin);
+}
+const nearestTo = (target: { x: number; y: number }) => motion.selectFrame(frames, target);
+const blinkTimers = (timers: Map<number, { delay: number }>) => [...timers.values()].filter(timer => timer.delay >= 3500).length;
 
 test('reduced motion loads no animation assets; live resume enables all poses and pause restores neutral', async () => {
   const app = setup(true);
   assert.equal(app.decodes(), 0); assert.equal(app.timers.size, 0); assert.equal(app.raf.size, 0);
   assert.equal(app.visible(), config.portraitConfig.neutral);
   app.media.matches = false; app.media.fire('change'); await flush(); app.settle();
-  assert.equal(app.decodes(), 27);
-  app.window.fire('pointermove', { isPrimary: true, pointerType: 'mouse', clientX: 1200, clientY: 223, target: app.stage }); app.settle();
-  assert.ok(app.visible()?.endsWith('gaze-r2-c4.webp')); assert.equal(app.timers.size, 0, 'directional heads never use neutral blinks');
+  assert.equal(app.decodes(), frames.length + 2);
+  app.window.fire('pointermove', { isPrimary: true, pointerType: 'mouse', clientX: 1200, clientY: eyeY, target: app.stage }); app.settle();
+  assertTracks(app.visible(), { x: 1, y: 0 }); assert.equal(blinkTimers(app.timers), 0, 'directional heads never use neutral blinks');
+  assert.equal(app.timers.size, 1, 'the jump from neutral crossfades');
   app.button.fire('click');
-  assert.ok(app.visible()?.endsWith('gaze-r2-c2.webp')); assert.equal(app.timers.size, 0); assert.equal(app.raf.size, 0);
+  assert.equal(app.visible(), neutralSrc); assert.equal(app.timers.size, 0); assert.equal(app.raf.size, 0);
   assert.equal(app.canvas.classList.contains('is-animated'), false);
 });
 
@@ -82,20 +96,21 @@ test('blur interrupts a blink and touch cancellation returns to neutral without 
   const [key, timer] = [...app.timers.entries()][0]; app.timers.delete(key); timer.fn();
   assert.ok(app.visible()?.endsWith('blink-half.webp'));
   app.window.fire('blur');
-  assert.ok(app.visible()?.endsWith('gaze-r2-c2.webp')); assert.equal(app.timers.size, 0);
+  assert.equal(app.visible(), neutralSrc); assert.equal(app.timers.size, 0);
   app.window.fire('focus');
-  const pointer = { isPrimary: true, button: 0, pointerId: 4, pointerType: 'touch', clientX: 0, clientY: 223, target: app.stage };
+  const pointer = { isPrimary: true, button: 0, pointerId: 4, pointerType: 'touch', clientX: 0, clientY: eyeY, target: app.stage };
   app.stage.fire('pointerdown', pointer); app.settle();
-  assert.equal(app.stage.hasPointerCapture(4), true); assert.ok(app.visible()?.endsWith('gaze-r2-c0.webp'));
+  assert.equal(app.stage.hasPointerCapture(4), true); assertTracks(app.visible(), { x: -1, y: 0 });
   app.stage.fire('pointercancel', pointer); app.settle();
-  assert.equal(app.stage.hasPointerCapture(4), false); assert.ok(app.visible()?.endsWith('gaze-r2-c2.webp'));
+  assert.equal(app.stage.hasPointerCapture(4), false); assert.equal(app.visible(), neutralSrc);
   const control = new ElementStub(); control.control = true;
   app.stage.fire('pointerdown', { ...pointer, target: control }); assert.equal(app.stage.hasPointerCapture(4), false);
   app.document.hidden = true; app.document.fire('visibilitychange'); assert.equal(app.timers.size, 0); assert.equal(app.raf.size, 0);
 });
 
 test('missing directional image retains a decoded neighboring pose', async () => {
-  const app = setup(false, 'gaze-r2-c4.webp'); await flush(); app.settle();
-  app.window.fire('pointermove', { isPrimary: true, pointerType: 'mouse', clientX: 1200, clientY: 223, target: app.stage }); app.settle();
-  assert.ok(app.visible()); assert.ok(!app.visible()?.endsWith('gaze-r2-c4.webp'));
+  const missing = nearestTo({ x: 1, y: 0 }).src;
+  const app = setup(false, missing); await flush(); app.settle();
+  app.window.fire('pointermove', { isPrimary: true, pointerType: 'mouse', clientX: 1200, clientY: eyeY, target: app.stage }); app.settle();
+  assert.ok(app.visible()); assert.notEqual(app.visible(), missing); assert.notEqual(app.visible(), neutralSrc);
 });
