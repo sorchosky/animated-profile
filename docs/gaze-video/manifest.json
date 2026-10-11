@@ -1,0 +1,1748 @@
+{
+ "source": {
+  "file": "gaze-sweep.mp4",
+  "sha256": "2987b19a9fc43b42ae8dad712800648982488acb5f548c59efd70725ebe15c78",
+  "frames": 243
+ },
+ "settings": {
+  "ringRadius": 0.85,
+  "minSpacing": 0.05,
+  "blinkMeanLimit": 0.35,
+  "tiers": {
+   "large": {
+    "width": 1152,
+    "height": 768,
+    "quality": 74
+   },
+   "standard": {
+    "width": 768,
+    "height": 512,
+    "quality": 76
+   }
+  }
+ },
+ "poseScale": {
+  "yaw0": -0.088,
+  "pitch0": 3.055,
+  "left": 31.328,
+  "right": 27.741,
+  "up": 16.941,
+  "down": 21.199
+ },
+ "excludedForBlink": [
+  14,
+  15,
+  16,
+  17,
+  18,
+  173,
+  174,
+  175,
+  176,
+  207,
+  208,
+  209,
+  210,
+  211,
+  212,
+  213
+ ],
+ "frames": [
+  {
+   "name": "f008",
+   "videoFrame": 8,
+   "loadRank": 0,
+   "yaw": -0.09,
+   "pitch": 3.06,
+   "x": 0.0,
+   "y": 0.0002,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f008.webp",
+     "bytes": 27684,
+     "sha256": "f651184892acef1ac182aed112e70a1e90af3bdc215db8ac15e926e6ed940cfe"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f008.webp",
+     "bytes": 16078,
+     "sha256": "ec627221f40444c5b0741660af2893ba0b30fef00c77df0c128174a590223ced"
+    }
+   }
+  },
+  {
+   "name": "f110",
+   "videoFrame": 110,
+   "loadRank": 1,
+   "yaw": 22.65,
+   "pitch": -12.05,
+   "x": 0.6967,
+   "y": -0.7584,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f110.webp",
+     "bytes": 25376,
+     "sha256": "97d7beca821ea594bf4f5bf3cd2fa68afce28939ee9976641caf873750f1310b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f110.webp",
+     "bytes": 15646,
+     "sha256": "71b8dfd71852b1c0427b7127c281066399f3306b8eba15afa49196a971ec73cf"
+    }
+   }
+  },
+  {
+   "name": "f151",
+   "videoFrame": 151,
+   "loadRank": 2,
+   "yaw": 24.92,
+   "pitch": 17.54,
+   "x": 0.7662,
+   "y": 0.6441,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f151.webp",
+     "bytes": 25412,
+     "sha256": "f43d2abba443b7789a889419b19061e6c763bcad46d0900506bafeb783df6a90"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f151.webp",
+     "bytes": 15684,
+     "sha256": "684ef4c1c08f7ac095e310ffdb2118272cc3e2f344b8ff09d4f71aa2ce816ad6"
+    }
+   }
+  },
+  {
+   "name": "f180",
+   "videoFrame": 180,
+   "loadRank": 3,
+   "yaw": -11.27,
+   "pitch": 25.81,
+   "x": -0.3034,
+   "y": 0.9124,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f180.webp",
+     "bytes": 23522,
+     "sha256": "6d6d304d530affc2b01cd3e891d56685dc1e61a9c1aeb75768d220cd5ffd45d2"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f180.webp",
+     "bytes": 14562,
+     "sha256": "2a568aa762652f3b1c660c04c1069a66412111562f46c70ada3ca06ba9b6f7c1"
+    }
+   }
+  },
+  {
+   "name": "f060",
+   "videoFrame": 60,
+   "loadRank": 4,
+   "yaw": -29.83,
+   "pitch": -5.43,
+   "x": -0.807,
+   "y": -0.4259,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f060.webp",
+     "bytes": 25424,
+     "sha256": "40e1d78de3c238f196e519d6573a9605e47bb06aa002a485009bdd73942649a2"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f060.webp",
+     "bytes": 15642,
+     "sha256": "4155cdb675ce364fcfc5fa4439080f23a82241ed6b027792cb82ed72de91e51c"
+    }
+   }
+  },
+  {
+   "name": "f096",
+   "videoFrame": 96,
+   "loadRank": 5,
+   "yaw": -3.54,
+   "pitch": -12.13,
+   "x": -0.0937,
+   "y": -0.7628,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f096.webp",
+     "bytes": 24956,
+     "sha256": "fcbcdc30c7c22ccdc96fcb251e8fbddb56d209f53fba6601c19080beb243a396"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f096.webp",
+     "bytes": 15110,
+     "sha256": "f4ee23b5f019ae154436a1beed7795e5fa6278087b9f210085da19619cf4b5f6"
+    }
+   }
+  },
+  {
+   "name": "f045",
+   "videoFrame": 45,
+   "loadRank": 6,
+   "yaw": -31.87,
+   "pitch": 10.92,
+   "x": -0.8144,
+   "y": 0.3156,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f045.webp",
+     "bytes": 24696,
+     "sha256": "f41381bb9eeaa09a6720a9e0d766f9f80c08fa33ada2a6fe6ac2047c1e4b1787"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f045.webp",
+     "bytes": 15414,
+     "sha256": "d72ad0f95716f35c9358adc049914f6f06b2f987895bd30da97d7b85412e83db"
+    }
+   }
+  },
+  {
+   "name": "f132",
+   "videoFrame": 132,
+   "loadRank": 7,
+   "yaw": 29.39,
+   "pitch": 2.75,
+   "x": 0.8848,
+   "y": -0.0152,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f132.webp",
+     "bytes": 25216,
+     "sha256": "7c1d44ebfbea7edd87712a69daa54157aee777ea2d8a4ba3760a5a82549fa477"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f132.webp",
+     "bytes": 15652,
+     "sha256": "bc6f172c8ed59d0b78dac2792f58e14e127c08873b4b5d277256c4db9318bed5"
+    }
+   }
+  },
+  {
+   "name": "f216",
+   "videoFrame": 216,
+   "loadRank": 8,
+   "yaw": -4.57,
+   "pitch": 14.68,
+   "x": -0.1216,
+   "y": 0.466,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f216.webp",
+     "bytes": 24638,
+     "sha256": "8456f3f83eda4082b8f6880de7a6c6e71e1bb34b3d13c862abb1f713be4bd422"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f216.webp",
+     "bytes": 15156,
+     "sha256": "c28b3d2c2f2230cd64d00956d6376e631235590911d3e0d7f6130ac13606cc2f"
+    }
+   }
+  },
+  {
+   "name": "f101",
+   "videoFrame": 101,
+   "loadRank": 9,
+   "yaw": 9.51,
+   "pitch": -14.7,
+   "x": 0.2942,
+   "y": -0.8911,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f101.webp",
+     "bytes": 24036,
+     "sha256": "91629d94077ade44aa921d39effcdba150d33eb1a339d082c54d4d86fc0ca0e3"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f101.webp",
+     "bytes": 14868,
+     "sha256": "99f2776d7896da72a31be0da016b201018147d70921a40f1ef8b3ac58fd2f156"
+    }
+   }
+  },
+  {
+   "name": "f078",
+   "videoFrame": 78,
+   "loadRank": 10,
+   "yaw": -17.46,
+   "pitch": -10.44,
+   "x": -0.4714,
+   "y": -0.6769,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f078.webp",
+     "bytes": 24678,
+     "sha256": "96546f8641d363d026e699695d0a19b1a6a02eb957b3877616edaf5c982517d8"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f078.webp",
+     "bytes": 15102,
+     "sha256": "71373768504f137daf71f438091ab37fd3fde4fd9fb15946aba5c2b16a8e2eb2"
+    }
+   }
+  },
+  {
+   "name": "f050",
+   "videoFrame": 50,
+   "loadRank": 11,
+   "yaw": -30.04,
+   "pitch": 2.1,
+   "x": -0.8201,
+   "y": -0.0479,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f050.webp",
+     "bytes": 24508,
+     "sha256": "0484286836858fdd0fbfce725b93eea4a50ad14498d9f83bd5f1003ad8c3f68c"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f050.webp",
+     "bytes": 15224,
+     "sha256": "a5a7cb84896bc87632a04879d2e00dedfa8f3acee833a572d4c6fd4afe1626ab"
+    }
+   }
+  },
+  {
+   "name": "f022",
+   "videoFrame": 22,
+   "loadRank": 12,
+   "yaw": -17.93,
+   "pitch": 15.09,
+   "x": -0.4841,
+   "y": 0.4824,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f022.webp",
+     "bytes": 23730,
+     "sha256": "e0fa396a4abe4a120bbd0dd806dd1c6bac2fb5ade156e100065f3c8e7f088e53"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f022.webp",
+     "bytes": 14926,
+     "sha256": "be7088cab885d1ebb0b94f08b47cbc655c275cdcd766161e6d2124bc331f6dc2"
+    }
+   }
+  },
+  {
+   "name": "f129",
+   "videoFrame": 129,
+   "loadRank": 13,
+   "yaw": 25.6,
+   "pitch": -5.28,
+   "x": 0.7965,
+   "y": -0.3589,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f129.webp",
+     "bytes": 25768,
+     "sha256": "123473f00803ec611e10f4a3b698cc45861490a70aac2f42f820c2a9e25a75f7"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f129.webp",
+     "bytes": 15918,
+     "sha256": "b2fd378ec4d60658bb6c0e8b5262c2c488d666d2d20788e7263f151fb774797a"
+    }
+   }
+  },
+  {
+   "name": "f136",
+   "videoFrame": 136,
+   "loadRank": 14,
+   "yaw": 26.8,
+   "pitch": 10.29,
+   "x": 0.824,
+   "y": 0.2899,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f136.webp",
+     "bytes": 24504,
+     "sha256": "ec234fa26111671360f4b701920a8c9334fe0ecd88540e9748188c4b58bc5bb4"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f136.webp",
+     "bytes": 14894,
+     "sha256": "14bce9877da68c6f64189b3357ce231ea9b33e558609bb752984df431187ec33"
+    }
+   }
+  },
+  {
+   "name": "f177",
+   "videoFrame": 177,
+   "loadRank": 15,
+   "yaw": -1.5,
+   "pitch": 25.03,
+   "x": -0.0382,
+   "y": 0.8665,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f177.webp",
+     "bytes": 23090,
+     "sha256": "d3ec5df581ce15a19e3bb0be3f1bdd8ef54dde560dab41b116fbe35f760023b9"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f177.webp",
+     "bytes": 13924,
+     "sha256": "85e03f18764b723054d71c0b25a91c0a89f495c1c69936f3dc799413a6774924"
+    }
+   }
+  },
+  {
+   "name": "f171",
+   "videoFrame": 171,
+   "loadRank": 16,
+   "yaw": 17.55,
+   "pitch": 20.83,
+   "x": 0.5403,
+   "y": 0.7298,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f171.webp",
+     "bytes": 23660,
+     "sha256": "3acf5b6284f93b7faf7fe097df39823fa2855bac9119d2b5236c32ff2ea1ea19"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f171.webp",
+     "bytes": 14484,
+     "sha256": "a07dbf14be14484312326a9a0f38ae7285d0d759a39369b43740763224e13a97"
+    }
+   }
+  },
+  {
+   "name": "f189",
+   "videoFrame": 189,
+   "loadRank": 17,
+   "yaw": -18.82,
+   "pitch": 23.95,
+   "x": -0.506,
+   "y": 0.8143,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f189.webp",
+     "bytes": 24792,
+     "sha256": "06ed7c3301b83c34a419a4d36f4a2433d095a5f768585a430f3b5d2fffbcc20b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f189.webp",
+     "bytes": 15256,
+     "sha256": "7427a923ad97efc48dd138f108047b6208cf907123093310f85ced0c1667e574"
+    }
+   }
+  },
+  {
+   "name": "f220",
+   "videoFrame": 220,
+   "loadRank": 18,
+   "yaw": -1.71,
+   "pitch": 9.42,
+   "x": -0.0441,
+   "y": 0.255,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f220.webp",
+     "bytes": 24856,
+     "sha256": "1dbb771a3cc2ae00612cf50bba3595a3e1ed88a5f1655903c849ef2bd024a671"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f220.webp",
+     "bytes": 15560,
+     "sha256": "955b581bf0484ef4650a209005a4ff087f8810a7f6dd62073b704626ab18ab6b"
+    }
+   }
+  },
+  {
+   "name": "f026",
+   "videoFrame": 26,
+   "loadRank": 19,
+   "yaw": -25.84,
+   "pitch": 15.56,
+   "x": -0.697,
+   "y": 0.5015,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f026.webp",
+     "bytes": 24616,
+     "sha256": "f8f42ac0a5d37161eef108a989ef6d1bc743f0c18220f8f387ebdf7c10276dd1"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f026.webp",
+     "bytes": 15124,
+     "sha256": "82d83abbd96bff7e23e4a1ea83954669bb464fd1d379b1061cbdfb47042a695c"
+    }
+   }
+  },
+  {
+   "name": "f098",
+   "videoFrame": 98,
+   "loadRank": 20,
+   "yaw": 2.67,
+   "pitch": -14.88,
+   "x": 0.0845,
+   "y": -0.8997,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f098.webp",
+     "bytes": 24174,
+     "sha256": "b6ef8a887b352a411825db03c7beae93b6aeed7f289cd7edf788838ca5112ec7"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f098.webp",
+     "bytes": 14826,
+     "sha256": "7b4e9f2bb385408f12b4433f0f71d87d00950dd7836794d7b0374f231d7decf0"
+    }
+   }
+  },
+  {
+   "name": "f103",
+   "videoFrame": 103,
+   "loadRank": 21,
+   "yaw": 17.24,
+   "pitch": -12.94,
+   "x": 0.5128,
+   "y": -0.85,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f103.webp",
+     "bytes": 24204,
+     "sha256": "bf264aed6698589222d8a5d85a89fc3c60c6c20f723a321a9877489534b1ed9c"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f103.webp",
+     "bytes": 14898,
+     "sha256": "d0cf70bacfa7e3bc17a4d4f8e409b16a57863975789e2f97c8c70eaa5b35cb84"
+    }
+   }
+  },
+  {
+   "name": "f020",
+   "videoFrame": 20,
+   "loadRank": 22,
+   "yaw": -10.13,
+   "pitch": 11.66,
+   "x": -0.2725,
+   "y": 0.3461,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f020.webp",
+     "bytes": 23364,
+     "sha256": "06834c40660a2bf8f9cd53d5965f304e4e4c036be749de456a8aaa62c8e48bd1"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f020.webp",
+     "bytes": 14346,
+     "sha256": "ae44f1b695cd8c79859ae3d770388c8f7053f69ec711d816668911afe52c1f65"
+    }
+   }
+  },
+  {
+   "name": "f214",
+   "videoFrame": 214,
+   "loadRank": 23,
+   "yaw": -6.28,
+   "pitch": 19.3,
+   "x": -0.1681,
+   "y": 0.6513,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f214.webp",
+     "bytes": 24548,
+     "sha256": "79798e09b2e7e22b77cc2e4553e3dddc8d0bd7744cf1f617760d568cbb87e298"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f214.webp",
+     "bytes": 15268,
+     "sha256": "46a6081bbd627fa1b62559124aca60ec339a38f538e4fe4e45d59f1ccf7d45b7"
+    }
+   }
+  },
+  {
+   "name": "f074",
+   "videoFrame": 74,
+   "loadRank": 24,
+   "yaw": -24.99,
+   "pitch": -8.11,
+   "x": -0.6757,
+   "y": -0.5601,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f074.webp",
+     "bytes": 24752,
+     "sha256": "f1bac1d3ae89da6d2e1fc19137c8c623b7689a5151ff5e7cfe1a37d09e962021"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f074.webp",
+     "bytes": 15444,
+     "sha256": "427962c2df9d1b4553120014d19083c14e03bf69dbdd048231e9084565a3779e"
+    }
+   }
+  },
+  {
+   "name": "f139",
+   "videoFrame": 139,
+   "loadRank": 25,
+   "yaw": 26.9,
+   "pitch": 14.76,
+   "x": 0.8268,
+   "y": 0.4695,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f139.webp",
+     "bytes": 24464,
+     "sha256": "41335d8e3ce7abdde51fb8c10308d626cb3547165ac5b999da68db80805d87a3"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f139.webp",
+     "bytes": 15224,
+     "sha256": "a1551773f2623c524716446968e60e2af66370d18fe6fd3fa8a32577f514640c"
+    }
+   }
+  },
+  {
+   "name": "f126",
+   "videoFrame": 126,
+   "loadRank": 26,
+   "yaw": 26.68,
+   "pitch": -7.54,
+   "x": 0.8202,
+   "y": -0.5315,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f126.webp",
+     "bytes": 25982,
+     "sha256": "4ed25b139eae0106592e16bba8ff4b2f94ffcc774969cca0952c4f631a69000e"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f126.webp",
+     "bytes": 16088,
+     "sha256": "009d24c2f7c5bdd3293515bb6e94c7670fe92bf4dabb2997a4d7b7c2042b4c55"
+    }
+   }
+  },
+  {
+   "name": "f131",
+   "videoFrame": 131,
+   "loadRank": 27,
+   "yaw": 28.74,
+   "pitch": -0.71,
+   "x": 0.8834,
+   "y": -0.1888,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f131.webp",
+     "bytes": 25578,
+     "sha256": "984a129cc7c92de22a52c1f143231c8d3195ad551af1fe995b5eb06b011044ab"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f131.webp",
+     "bytes": 15636,
+     "sha256": "7a39045208c8ba2ac3c4dc8e863b0973cf6f2e1b05b19e7177183be9b1e66837"
+    }
+   }
+  },
+  {
+   "name": "f053",
+   "videoFrame": 53,
+   "loadRank": 28,
+   "yaw": -31.42,
+   "pitch": -1.3,
+   "x": -0.85,
+   "y": -0.2183,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f053.webp",
+     "bytes": 24762,
+     "sha256": "4832889c1cdc08e662cab8abe5dfab168aeba6de79d09bb25f65d96fe04b466f"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f053.webp",
+     "bytes": 15882,
+     "sha256": "3717b43861d50527f4f5e06d35d2bb8fa2c0cf900350c6a5a3230fe93b1eb853"
+    }
+   }
+  },
+  {
+   "name": "f082",
+   "videoFrame": 82,
+   "loadRank": 29,
+   "yaw": -11.87,
+   "pitch": -11.65,
+   "x": -0.3197,
+   "y": -0.7501,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f082.webp",
+     "bytes": 25026,
+     "sha256": "ca5807e0b3cba486d7902206829cef089d64dc4dd12d87660180206cd5d3bf44"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f082.webp",
+     "bytes": 15390,
+     "sha256": "63c829f5fc8a866f074f0d34edfd1b27cd4e07386d8bcb44ff194629b2fbe1bf"
+    }
+   }
+  },
+  {
+   "name": "f047",
+   "videoFrame": 47,
+   "loadRank": 30,
+   "yaw": -32.22,
+   "pitch": 7.27,
+   "x": -0.8717,
+   "y": 0.1691,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f047.webp",
+     "bytes": 24470,
+     "sha256": "5da7ab922c0c12155fc652a58009fea5c081604d4a30d7a5a2f860c832443b78"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f047.webp",
+     "bytes": 15230,
+     "sha256": "f699a95855dd1d7541da303bdc989e36ce38bc1c99378b318efc481de57fb589"
+    }
+   }
+  },
+  {
+   "name": "f134",
+   "videoFrame": 134,
+   "loadRank": 31,
+   "yaw": 27.74,
+   "pitch": 6.49,
+   "x": 0.8526,
+   "y": 0.1376,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f134.webp",
+     "bytes": 24486,
+     "sha256": "05b2c545474cef3f1220af0995decc9a1dc9afc14d33c5365a577dafa2c97fc1"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f134.webp",
+     "bytes": 15234,
+     "sha256": "9127beda385d3c7a73a7f96f504ca915ea0b5eb7a70ff674971f4ca5ce37c0fb"
+    }
+   }
+  },
+  {
+   "name": "f178",
+   "videoFrame": 178,
+   "loadRank": 32,
+   "yaw": -6.08,
+   "pitch": 24.67,
+   "x": -0.1626,
+   "y": 0.8665,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f178.webp",
+     "bytes": 23184,
+     "sha256": "fa9ce4a7f01912d21a2200e4e17b4a094f2cc20c0adfd95e046cc03617bac197"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f178.webp",
+     "bytes": 14180,
+     "sha256": "ce3f1a2740bd0a5ddf682c2eadcf4d13a3c2475f45371101ffa7dae0af06ee2a"
+    }
+   }
+  },
+  {
+   "name": "f092",
+   "videoFrame": 92,
+   "loadRank": 33,
+   "yaw": -8.95,
+   "pitch": -10.52,
+   "x": -0.2167,
+   "y": -0.681,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f092.webp",
+     "bytes": 25258,
+     "sha256": "335b22ff4cc98a47adb115c35d8618ea7429a5e713f6e10ccda2807a62fea60c"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f092.webp",
+     "bytes": 15618,
+     "sha256": "810f6674f05ac4399dcc9cb8d7720ddfa9f60f11caa854b8eb7dae679f502005"
+    }
+   }
+  },
+  {
+   "name": "f021",
+   "videoFrame": 21,
+   "loadRank": 34,
+   "yaw": -13.49,
+   "pitch": 13.56,
+   "x": -0.3636,
+   "y": 0.4214,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f021.webp",
+     "bytes": 23726,
+     "sha256": "05001f700382706cdf24362470c4a88e3c56031ef1e3f637bfba0ecdbf9ff1b8"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f021.webp",
+     "bytes": 14518,
+     "sha256": "4a00f8a62e250fed74dd505dcc9290c892cd21d2405477066be1e9aafae4cc32"
+    }
+   }
+  },
+  {
+   "name": "f222",
+   "videoFrame": 222,
+   "loadRank": 35,
+   "yaw": -1.24,
+   "pitch": 6.59,
+   "x": -0.029,
+   "y": 0.1419,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f222.webp",
+     "bytes": 25188,
+     "sha256": "a2a5d7ee876da72840675cbf6c975e6c837f647a8b322928edb6c8fb38333433"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f222.webp",
+     "bytes": 15606,
+     "sha256": "e7e5e21cf40f826588eb4158e452cc308ed76d022c680b73a46523c639c51c65"
+    }
+   }
+  },
+  {
+   "name": "f034",
+   "videoFrame": 34,
+   "loadRank": 36,
+   "yaw": -29.56,
+   "pitch": 14.56,
+   "x": -0.7996,
+   "y": 0.4532,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f034.webp",
+     "bytes": 24986,
+     "sha256": "1208b70fe22c4b04712e31eabc80cb8e1e74ab7cc38812e834c34d55096adb1b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f034.webp",
+     "bytes": 15528,
+     "sha256": "e7afc25a198a71e52b384e609884438e00087c9fa193c6a7901b34121dcb6cdc"
+    }
+   }
+  },
+  {
+   "name": "f182",
+   "videoFrame": 182,
+   "loadRank": 37,
+   "yaw": -14.87,
+   "pitch": 24.54,
+   "x": -0.4011,
+   "y": 0.8615,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f182.webp",
+     "bytes": 24316,
+     "sha256": "cf3d84086d8da428f8f351a8a850c590223676466c71784961e1f8a9619e8edc"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f182.webp",
+     "bytes": 15040,
+     "sha256": "0a881e893956bd0b18712061302524d14cd47bb8877f73a3873d6250284bdc12"
+    }
+   }
+  },
+  {
+   "name": "f077",
+   "videoFrame": 77,
+   "loadRank": 38,
+   "yaw": -20.85,
+   "pitch": -9.41,
+   "x": -0.5634,
+   "y": -0.6348,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f077.webp",
+     "bytes": 24634,
+     "sha256": "010aa636eca6b88e5946cea63eb178a5fbf15a868b938216522852f0f0b2635b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f077.webp",
+     "bytes": 15060,
+     "sha256": "f7f1af0e03a47a7c94b80df3694bec2009821038dbdf19a51079cfbf2b23f2af"
+    }
+   }
+  },
+  {
+   "name": "f169",
+   "videoFrame": 169,
+   "loadRank": 39,
+   "yaw": 22.45,
+   "pitch": 20.67,
+   "x": 0.6905,
+   "y": 0.7062,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f169.webp",
+     "bytes": 24668,
+     "sha256": "4f0fa4576c088f36174ff45df1a956fb893d004bd075e352910306c6e6356ed5"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f169.webp",
+     "bytes": 15030,
+     "sha256": "f892fdbae02a0633979ade69f9006ac5c9243fedca6de6176e8f747af51aa03f"
+    }
+   }
+  },
+  {
+   "name": "f100",
+   "videoFrame": 100,
+   "loadRank": 40,
+   "yaw": 6.62,
+   "pitch": -16.26,
+   "x": 0.2054,
+   "y": -0.9301,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f100.webp",
+     "bytes": 24130,
+     "sha256": "7960c48a33287a7de4b84bdde5a12268f7dcd145c15ce9b669680297cbd02b1d"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f100.webp",
+     "bytes": 14852,
+     "sha256": "eee207ac2b54294f9eb5bb407b0d61f4e7e33b4514fd195465bd53cd696c8f74"
+    }
+   }
+  },
+  {
+   "name": "f106",
+   "videoFrame": 106,
+   "loadRank": 41,
+   "yaw": 19.58,
+   "pitch": -12.09,
+   "x": 0.6028,
+   "y": -0.7824,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f106.webp",
+     "bytes": 24492,
+     "sha256": "f7f7f220d413bd66b8bcb240c09432482a9ca1a3e5775b8da2a18925816fcd4e"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f106.webp",
+     "bytes": 15278,
+     "sha256": "748fbedd17cb7985b7d606ed76bea023d5520c3d4144c690443486a889bd7130"
+    }
+   }
+  },
+  {
+   "name": "f048",
+   "videoFrame": 48,
+   "loadRank": 42,
+   "yaw": -33.05,
+   "pitch": 4.89,
+   "x": -0.8734,
+   "y": 0.0737,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f048.webp",
+     "bytes": 24700,
+     "sha256": "133d2d73a1897a492873b06bdba09bc6ae50308b90a9a9aab48b6252c6c459cf"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f048.webp",
+     "bytes": 15074,
+     "sha256": "11795aa6f61cceb44aa594dbc3dba26c46e07f093f8e1af0ed13b8071e218b81"
+    }
+   }
+  },
+  {
+   "name": "f122",
+   "videoFrame": 122,
+   "loadRank": 43,
+   "yaw": 25.41,
+   "pitch": -9.23,
+   "x": 0.7814,
+   "y": -0.6162,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f122.webp",
+     "bytes": 25474,
+     "sha256": "6ebf1cba316142128f368fff78e73a3656ebee82e0a355dfa1eb7c6486a5250b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f122.webp",
+     "bytes": 15746,
+     "sha256": "5c5932d82c6bd111962cc5b69afecd74a01498029e71a11b67a154c67f8702e2"
+    }
+   }
+  },
+  {
+   "name": "f097",
+   "videoFrame": 97,
+   "loadRank": 44,
+   "yaw": -0.81,
+   "pitch": -13.23,
+   "x": -0.0196,
+   "y": -0.8169,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f097.webp",
+     "bytes": 24506,
+     "sha256": "07dc36356acb16aa1b4e3ffa04fb2e07c8e8a0d68aa957aee16eff2e1444ab9b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f097.webp",
+     "bytes": 14972,
+     "sha256": "3ea7dc592a35a858a8d5bbe91774e6990e767f950f800325e450d9b45fe830a7"
+    }
+   }
+  },
+  {
+   "name": "f054",
+   "videoFrame": 54,
+   "loadRank": 45,
+   "yaw": -30.13,
+   "pitch": -3.11,
+   "x": -0.85,
+   "y": -0.3095,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f054.webp",
+     "bytes": 24866,
+     "sha256": "6e87a4bbf549dfd77ee79ce79b6057508fc36cbaaae23f51b22e69537e2e8d9a"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f054.webp",
+     "bytes": 15472,
+     "sha256": "01ab60c75aec43c20b99cec3b2a5f8e3271d67e85a5bfb94092ac4cb841d8132"
+    }
+   }
+  },
+  {
+   "name": "f127",
+   "videoFrame": 127,
+   "loadRank": 46,
+   "yaw": 26.93,
+   "pitch": -5.83,
+   "x": 0.8202,
+   "y": -0.4458,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f127.webp",
+     "bytes": 25820,
+     "sha256": "e8ac3dd26942052d5ba3875e71fa8145ab666828cac2d1e8e695a302399e519b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f127.webp",
+     "bytes": 15938,
+     "sha256": "703539df96bcd1203f88b14a70cd7fd0f2bab0286b361c6412fea25f4b4314c9"
+    }
+   }
+  },
+  {
+   "name": "f137",
+   "videoFrame": 137,
+   "loadRank": 47,
+   "yaw": 26.58,
+   "pitch": 12.65,
+   "x": 0.8173,
+   "y": 0.3846,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f137.webp",
+     "bytes": 24262,
+     "sha256": "236b91bb9abbf3a89b75ff4710057d59bba1589782d820b20c4c8a4fc2f78a3a"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f137.webp",
+     "bytes": 14956,
+     "sha256": "9f82b199e15319abbb5d6f0149c65b0f27ed582665446b4d171e2e6bff5a73e2"
+    }
+   }
+  },
+  {
+   "name": "f067",
+   "videoFrame": 67,
+   "loadRank": 48,
+   "yaw": -26.93,
+   "pitch": -6.38,
+   "x": -0.7356,
+   "y": -0.4685,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f067.webp",
+     "bytes": 25582,
+     "sha256": "1a1652ed5f51308271394aee388d67ffd1a846aed326b49ffc3452ca9460198d"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f067.webp",
+     "bytes": 15728,
+     "sha256": "ca1f0b02a3cc00a1f602a98b4ba5e56e39f016cb1fbf30c0e52eb529ddd5b20a"
+    }
+   }
+  },
+  {
+   "name": "f046",
+   "videoFrame": 46,
+   "loadRank": 49,
+   "yaw": -30.1,
+   "pitch": 9.26,
+   "x": -0.8622,
+   "y": 0.249,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f046.webp",
+     "bytes": 24448,
+     "sha256": "d4b381638051a3dc18404b173f35b7fa2b4fbd9d3414d9aced57b79dc93da7fa"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f046.webp",
+     "bytes": 15160,
+     "sha256": "75045dc9c6e849d382225abaf5347e2f46b98598cdda12f36c9869c9be784333"
+    }
+   }
+  },
+  {
+   "name": "f130",
+   "videoFrame": 130,
+   "loadRank": 50,
+   "yaw": 28.27,
+   "pitch": -3.41,
+   "x": 0.8689,
+   "y": -0.3245,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f130.webp",
+     "bytes": 25500,
+     "sha256": "72a9d443044972bf80f84caa6a969c284584cb18993f98aeb1b1b7aa9c3a03f0"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f130.webp",
+     "bytes": 15556,
+     "sha256": "3d417052c66847410d62ca24617ac509647c2db412e503173a78f7c78f158a43"
+    }
+   }
+  },
+  {
+   "name": "f102",
+   "videoFrame": 102,
+   "loadRank": 51,
+   "yaw": 14.03,
+   "pitch": -13.89,
+   "x": 0.4327,
+   "y": -0.85,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f102.webp",
+     "bytes": 23884,
+     "sha256": "a34619338081254bb0bf10bc2b5f1beca165fc770af02c44f6396e4db5f00eb2"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f102.webp",
+     "bytes": 14864,
+     "sha256": "81c757e3f923ac3407e260f14145506d4c1baee1d6b33d8c9a95ed7347586a46"
+    }
+   }
+  },
+  {
+   "name": "f080",
+   "videoFrame": 80,
+   "loadRank": 52,
+   "yaw": -14.68,
+   "pitch": -11.45,
+   "x": -0.3959,
+   "y": -0.7278,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f080.webp",
+     "bytes": 24672,
+     "sha256": "2227e4bc68c70268ff5fa24b8250b467a4b405e0c511d60ccbc1aae80ef58be4"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f080.webp",
+     "bytes": 15196,
+     "sha256": "0b03afb14b30b1c2f86a5986234dc49158dfde5b1960f2d67e1fad8a9dd114f5"
+    }
+   }
+  },
+  {
+   "name": "f217",
+   "videoFrame": 217,
+   "loadRank": 53,
+   "yaw": -2.73,
+   "pitch": 13.17,
+   "x": -0.0718,
+   "y": 0.4057,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f217.webp",
+     "bytes": 24666,
+     "sha256": "5e872f5879bba73631e09574f8ba9b716e535991299bb9a12d44b50a7d7406ed"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f217.webp",
+     "bytes": 15352,
+     "sha256": "e9f63f52a559a74fd5168f624ffa7ca58a7a2677a5d7aaa1efca6dd0a72e68d8"
+    }
+   }
+  },
+  {
+   "name": "f023",
+   "videoFrame": 23,
+   "loadRank": 54,
+   "yaw": -20.64,
+   "pitch": 15.65,
+   "x": -0.5577,
+   "y": 0.5049,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f023.webp",
+     "bytes": 24112,
+     "sha256": "42ad04d4cdcc547516ef1c8e0f97992d88b5fa7b10b1c21072d58b64bbcb5b37"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f023.webp",
+     "bytes": 15150,
+     "sha256": "e9f9c86802f492cbe54b5d3233f3171b8e41d43c1a30bae4ffd1c2c26400dca3"
+    }
+   }
+  },
+  {
+   "name": "f179",
+   "videoFrame": 179,
+   "loadRank": 55,
+   "yaw": -9.1,
+   "pitch": 24.08,
+   "x": -0.2444,
+   "y": 0.8665,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f179.webp",
+     "bytes": 23372,
+     "sha256": "6d0a9fb84a9e60ab017a1a3e8e34607365cebccf94453b265557e2a48d12991b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f179.webp",
+     "bytes": 14366,
+     "sha256": "2cfcb32851418a3c5412bce4e815b635c0ba559a5712a0525482fa31a1cc7633"
+    }
+   }
+  },
+  {
+   "name": "f215",
+   "videoFrame": 215,
+   "loadRank": 56,
+   "yaw": -5.24,
+   "pitch": 16.47,
+   "x": -0.1397,
+   "y": 0.538,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f215.webp",
+     "bytes": 24422,
+     "sha256": "0d33012032ac7011d4008bd15cc7781e2feaadcb9544d07b6c8c8c7cce18eff4"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f215.webp",
+     "bytes": 15078,
+     "sha256": "cfa611e8a633be5a4860d3d37e355592a6e3e92384d9c5429ada2c847bb0b8e3"
+    }
+   }
+  },
+  {
+   "name": "f012",
+   "videoFrame": 12,
+   "loadRank": 57,
+   "yaw": -0.56,
+   "pitch": 4.82,
+   "x": -0.0128,
+   "y": 0.0696,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f012.webp",
+     "bytes": 27068,
+     "sha256": "c36c7fa74c8f719ca944c59cd63c94797a9363df525c7756a36686ec60911050"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f012.webp",
+     "bytes": 15922,
+     "sha256": "5b2efec554f08fb151a63f849516cfa11802a88123202fd2cf0071a29946e1c9"
+    }
+   }
+  },
+  {
+   "name": "f143",
+   "videoFrame": 143,
+   "loadRank": 58,
+   "yaw": 25.22,
+   "pitch": 16.45,
+   "x": 0.7909,
+   "y": 0.5288,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f143.webp",
+     "bytes": 25034,
+     "sha256": "435182e6e02cda940f5c91884c8edf423f83c9b4a1b8f3c282b2ebb3351ac7d0"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f143.webp",
+     "bytes": 15824,
+     "sha256": "9eec0fd963792cd617d2ee2188eda6290f9c8eed2a1a0c7ebeb79d813e077dcc"
+    }
+   }
+  },
+  {
+   "name": "f094",
+   "videoFrame": 94,
+   "loadRank": 59,
+   "yaw": -6.06,
+   "pitch": -12.06,
+   "x": -0.1619,
+   "y": -0.7585,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f094.webp",
+     "bytes": 24860,
+     "sha256": "2c6d199f886cb25b98b4aa497127aac715fc77d850620f2230a107ba1c124cc7"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f094.webp",
+     "bytes": 15288,
+     "sha256": "5cfad4b91fb75b3bbade624e72a52fd1b24091469a24534888ffec4af21142da"
+    }
+   }
+  },
+  {
+   "name": "f019",
+   "videoFrame": 19,
+   "loadRank": 60,
+   "yaw": -7.64,
+   "pitch": 11.69,
+   "x": -0.2049,
+   "y": 0.3449,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f019.webp",
+     "bytes": 23624,
+     "sha256": "e18f306ce6ff14fbae8156f7b2c5992381c770c215342f23404aa0d88dce993f"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f019.webp",
+     "bytes": 14472,
+     "sha256": "69900ba66c723eac617e76496c17d5f2291ced75f766e59aa7428cc8ac95b25d"
+    }
+   }
+  },
+  {
+   "name": "f115",
+   "videoFrame": 115,
+   "loadRank": 61,
+   "yaw": 22.61,
+   "pitch": -11.45,
+   "x": 0.7294,
+   "y": -0.7009,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f115.webp",
+     "bytes": 25788,
+     "sha256": "b7d858a68b5977812b1686b1efc407ce7335f0e8671441210384d3401afa41db"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f115.webp",
+     "bytes": 15802,
+     "sha256": "a0606aa87cd456d681521517d6e605c2d359af1d2ffde185abe9370b480273b1"
+    }
+   }
+  },
+  {
+   "name": "f133",
+   "videoFrame": 133,
+   "loadRank": 62,
+   "yaw": 28.79,
+   "pitch": 4.27,
+   "x": 0.8848,
+   "y": 0.0486,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f133.webp",
+     "bytes": 24966,
+     "sha256": "934fcf3b7ffcbd617ea0dbaae18e5844fcaa5820ea4677c7d7b910e8f5b62f49"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f133.webp",
+     "bytes": 15394,
+     "sha256": "7697f879176d0da8b0a9a592b822356124f11a7ae66fea66f8fbf27b22ffd755"
+    }
+   }
+  },
+  {
+   "name": "f135",
+   "videoFrame": 135,
+   "loadRank": 63,
+   "yaw": 27.31,
+   "pitch": 8.74,
+   "x": 0.8395,
+   "y": 0.2281,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f135.webp",
+     "bytes": 24416,
+     "sha256": "1a0c755ac335c35095cb92176ef387dc2deb78ea205b26978563adc569712004"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f135.webp",
+     "bytes": 15252,
+     "sha256": "86b2bdd4e3008cf3e636d22f6acb77a7ff1512d379f90325fb8910ce54cf30a6"
+    }
+   }
+  },
+  {
+   "name": "f170",
+   "videoFrame": 170,
+   "loadRank": 64,
+   "yaw": 19.52,
+   "pitch": 22.17,
+   "x": 0.6007,
+   "y": 0.7127,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f170.webp",
+     "bytes": 23872,
+     "sha256": "09209fbf822df18ca5936f810af19239c25188f4db49cb8e20b0824b05fcfdd9"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f170.webp",
+     "bytes": 14810,
+     "sha256": "ba71b1da5a34a6716046aab38203622e84c041acd4dd724355537ca5359d54fd"
+    }
+   }
+  },
+  {
+   "name": "f075",
+   "videoFrame": 75,
+   "loadRank": 65,
+   "yaw": -23.16,
+   "pitch": -9.65,
+   "x": -0.6259,
+   "y": -0.6348,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f075.webp",
+     "bytes": 24582,
+     "sha256": "38f495c95adabeab3842759e1f9f4f8316380d5127482510ec86c575b0e30474"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f075.webp",
+     "bytes": 15130,
+     "sha256": "7707d0721d4571f01e664343889b4903c885cf73c39376bd755ac280f668fce4"
+    }
+   }
+  },
+  {
+   "name": "f183",
+   "videoFrame": 183,
+   "loadRank": 66,
+   "yaw": -15.83,
+   "pitch": 23.17,
+   "x": -0.4272,
+   "y": 0.8064,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f183.webp",
+     "bytes": 24436,
+     "sha256": "eb4824188f64117931e11c446970182f8e8367d877d452b993671487d8be311f"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f183.webp",
+     "bytes": 15144,
+     "sha256": "42e1502423000dfefa847e530f1023cb3a1f5bf2be5cfba99258577de16c9256"
+    }
+   }
+  },
+  {
+   "name": "f089",
+   "videoFrame": 89,
+   "loadRank": 67,
+   "yaw": -9.66,
+   "pitch": -12.59,
+   "x": -0.2597,
+   "y": -0.7544,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f089.webp",
+     "bytes": 25140,
+     "sha256": "2ef4b6e980a30fe0016ed3e45f10bc6ab59576fe2f51fffa1ceb6055390c866b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f089.webp",
+     "bytes": 15650,
+     "sha256": "6e7430f788f48e52f35b50ff0ac86f369f084d97a8367273474a084111ba792d"
+    }
+   }
+  },
+  {
+   "name": "f032",
+   "videoFrame": 32,
+   "loadRank": 68,
+   "yaw": -26.96,
+   "pitch": 14.95,
+   "x": -0.7408,
+   "y": 0.4636,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f032.webp",
+     "bytes": 25092,
+     "sha256": "6988369330abfe79c8af937fe5144f4930406c51910a8270845a93239859e668"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f032.webp",
+     "bytes": 15626,
+     "sha256": "708bea86a52504a9d29e4159178a774d7cedaa931137c165caf16bb555823596"
+    }
+   }
+  },
+  {
+   "name": "f025",
+   "videoFrame": 25,
+   "loadRank": 69,
+   "yaw": -23.65,
+   "pitch": 14.88,
+   "x": -0.6392,
+   "y": 0.5015,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f025.webp",
+     "bytes": 24406,
+     "sha256": "04fe84d7da3ea08cba9e3bb0be6fa14117f79172370f5c2c88cd856c97bf3099"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f025.webp",
+     "bytes": 14996,
+     "sha256": "4eab5ca8ebe8ee71068f27562d02140bbf53d27d6729ff7e63e927f9c9477f5e"
+    }
+   }
+  },
+  {
+   "name": "f044",
+   "videoFrame": 44,
+   "loadRank": 70,
+   "yaw": -29.65,
+   "pitch": 12.94,
+   "x": -0.8021,
+   "y": 0.3965,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f044.webp",
+     "bytes": 24978,
+     "sha256": "7af0c6acddc1b09959b2960d4882a97bd4543f59bbe8ad5e79ab8f6afc9b273a"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f044.webp",
+     "bytes": 15444,
+     "sha256": "339cfda7eee9e4258f5e3fd1ce466e0d656460f68650d622a082cb547ec0cc76"
+    }
+   }
+  },
+  {
+   "name": "f058",
+   "videoFrame": 58,
+   "loadRank": 71,
+   "yaw": -28.06,
+   "pitch": -4.54,
+   "x": -0.8097,
+   "y": -0.3475,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f058.webp",
+     "bytes": 25372,
+     "sha256": "1c191162d2e521baa81b818982a6e7d65f70dac8ad948a1984f4e86e9a3770fd"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f058.webp",
+     "bytes": 15818,
+     "sha256": "ed215a82f2b03315446dbc48ade13abbb3c5851cb0db125d714180456e88f9c1"
+    }
+   }
+  },
+  {
+   "name": "f147",
+   "videoFrame": 147,
+   "loadRank": 72,
+   "yaw": 24.52,
+   "pitch": 17.76,
+   "x": 0.7574,
+   "y": 0.5895,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f147.webp",
+     "bytes": 25262,
+     "sha256": "afee7ec3bacff7c62ac86c4a04f776cad3df0876f61b93cb054b8eca5afb0cd9"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f147.webp",
+     "bytes": 15516,
+     "sha256": "b112332b769a2be9163516fcddd59f305e378d0cc6c935b133a48d8a92dbfeaf"
+    }
+   }
+  },
+  {
+   "name": "f073",
+   "videoFrame": 73,
+   "loadRank": 73,
+   "yaw": -26.53,
+   "pitch": -7.42,
+   "x": -0.7176,
+   "y": -0.5258,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f073.webp",
+     "bytes": 25226,
+     "sha256": "9b2e7aa8e1e7acd1896849d7461c1c414a8e87a43f0eea34dc7d08e218c0bf8a"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f073.webp",
+     "bytes": 15530,
+     "sha256": "fdfbb1a1d953b2b35316a6041438452a40597437095b6e3c4dac012fd90373ef"
+    }
+   }
+  },
+  {
+   "name": "f099",
+   "videoFrame": 99,
+   "loadRank": 74,
+   "yaw": 4.88,
+   "pitch": -15.48,
+   "x": 0.1522,
+   "y": -0.9301,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f099.webp",
+     "bytes": 24244,
+     "sha256": "aa9363687ac0ff402127dd0139c9a2140dd696b735a71c511bb3c64efc575b7b"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f099.webp",
+     "bytes": 14854,
+     "sha256": "b3739212b9590f5b47ef590a92b72c8e4bafd0c004af4159ecd334b302c5e863"
+    }
+   }
+  },
+  {
+   "name": "f051",
+   "videoFrame": 51,
+   "loadRank": 75,
+   "yaw": -30.31,
+   "pitch": 0.79,
+   "x": -0.8201,
+   "y": -0.101,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f051.webp",
+     "bytes": 24646,
+     "sha256": "c774be631f6b6a9afc0cc261b28ef432c5bc9497d3e3a950eb6565e726bd5f6d"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f051.webp",
+     "bytes": 15732,
+     "sha256": "2da05c785dfe3bd8f509909347c2b80e4c9642d4904c9f43e772e8e3b1011039"
+    }
+   }
+  },
+  {
+   "name": "f218",
+   "videoFrame": 218,
+   "loadRank": 76,
+   "yaw": -2.62,
+   "pitch": 10.56,
+   "x": -0.0686,
+   "y": 0.301,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f218.webp",
+     "bytes": 24678,
+     "sha256": "000ff2d8a4e01281f63c221c0981b8a151247783dcb9d780ccd5e06b77642695"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f218.webp",
+     "bytes": 15400,
+     "sha256": "bb03302f57c1e236aeed8c0f0d65401a788c7bd157719c315544f0b3762e67ee"
+    }
+   }
+  },
+  {
+   "name": "f104",
+   "videoFrame": 104,
+   "loadRank": 77,
+   "yaw": 16.65,
+   "pitch": -14.36,
+   "x": 0.5309,
+   "y": -0.803,
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/f104.webp",
+     "bytes": 24128,
+     "sha256": "e3a9670fdb4e04804e1175f1f6679e1e7beb0eb6bd64fb10e44556396dd554ef"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/f104.webp",
+     "bytes": 14998,
+     "sha256": "ed8052c36992d8391c3aa0035aebeeafdb22112727fdfff333af6149768b2805"
+    }
+   }
+  }
+ ],
+ "blinks": {
+  "blink-half": {
+   "videoFrame": 14,
+   "alignedTo": 8,
+   "affine": [
+    [
+     1.0058,
+     -0.0105,
+     0.1821
+    ],
+    [
+     0.0105,
+     1.0058,
+     -11.8238
+    ]
+   ],
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/blink-half.webp",
+     "bytes": 27224,
+     "sha256": "fec5a300ed0f5b6208ca7613c87e56e85f09f84b873d54585004848239284710"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/blink-half.webp",
+     "bytes": 15920,
+     "sha256": "9610df9eae76179b1b0c504df90738d8d095857bbf8ad93e29d3b17237b7607c"
+    }
+   }
+  },
+  "blink-closed": {
+   "videoFrame": 16,
+   "alignedTo": 8,
+   "affine": [
+    [
+     0.9694,
+     -0.03,
+     29.0414
+    ],
+    [
+     0.03,
+     0.9694,
+     -18.3441
+    ]
+   ],
+   "files": {
+    "large": {
+     "url": "/portraits/gaze-video/large/blink-closed.webp",
+     "bytes": 27076,
+     "sha256": "44efec13086c1a8849e62cf75f6ba039606b74ec1eb3d20d33a7a2dd69ae31c1"
+    },
+    "standard": {
+     "url": "/portraits/gaze-video/standard/blink-closed.webp",
+     "bytes": 15846,
+     "sha256": "71c25ea96fef24ef12d19ee5e0735d69644b8f9acd1ec097a431196ae86c7f9f"
+    }
+   }
+  }
+ }
+}

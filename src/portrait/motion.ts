@@ -25,11 +25,19 @@ export function smoothPoint(current: Point, target: Point, elapsedMs: number, sm
   };
 }
 
-/** A small margin prevents flicker along the boundary between two portraits. */
-export function selectFrame(frames: readonly PortraitFrame[], point: Point, current?: PortraitFrame, margin = 0.02): PortraitFrame {
+export const poseDistance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
+
+/** A small linear margin prevents flicker along the boundary between two portraits. */
+export function selectFrame(frames: readonly PortraitFrame[], point: Point, current?: PortraitFrame, margin = 0.015): PortraitFrame {
   if (!frames.length) throw new Error('At least the neutral portrait is required.');
-  const distance = (frame: PortraitFrame) => (frame.x - point.x) ** 2 + (frame.y - point.y) ** 2;
+  const distance = (frame: PortraitFrame) => poseDistance(frame, point);
   const nearest = frames.reduce((best, frame) => distance(frame) < distance(best) ? frame : best);
   if (current && frames.includes(current) && distance(current) <= distance(nearest) + margin) return current;
   return nearest;
+}
+
+/** Neighboring frames cut; long jumps across the unsampled interior crossfade for a duration that scales with distance. */
+export function crossfadeDuration(from: Point, to: Point, threshold: number, [min, max]: readonly [number, number]): number {
+  const distance = poseDistance(from, to);
+  return distance <= threshold ? 0 : Math.round(Math.min(max, Math.max(min, distance * max)));
 }

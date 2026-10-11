@@ -3,21 +3,40 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { gazeFrames, portraitConfig, assetUrl } from '../src/portrait/config.ts';
+import { poseDistance } from '../src/portrait/motion.ts';
 
-test('both resolution tiers contain every mapped gaze and neutral blink asset with the documented hashes', () => {
-  const manifest = JSON.parse(readFileSync(new URL('../docs/gaze-v2/manifest.json', import.meta.url), 'utf8'));
+const manifest = JSON.parse(readFileSync(new URL('../docs/gaze-video/manifest.json', import.meta.url), 'utf8'));
+const sha256 = (url: string) => createHash('sha256').update(readFileSync(new URL(`../public${url}`, import.meta.url))).digest('hex');
+
+test('both tiers ship every mapped video frame and the rebuilt blink pair with the documented hashes', () => {
   for (const tier of ['standard', 'large'] as const) {
     const frames = gazeFrames(tier);
-    assert.equal(frames.length, 25);
-    assert.equal(new Set(frames.map(frame => `${frame.x},${frame.y}`)).size, 25);
-    for (const frame of [...manifest.frames, ...manifest.blinkFrames]) {
-      const variant = frame.variants[tier];
-      const bytes = readFileSync(new URL(`../public${variant.url}`, import.meta.url));
-      assert.equal(createHash('sha256').update(bytes).digest('hex'), variant.sha256);
-      if (frame.x !== undefined) assert.equal(frames.find(f => f.x === frame.x && f.y === frame.y)?.src, variant.url);
+    assert.equal(frames.length, manifest.frames.length);
+    manifest.frames.forEach((entry: any, index: number) => {
+      assert.equal(frames[index].src, entry.files[tier].url, 'load order matches the manifest');
+      assert.deepEqual({ x: frames[index].x, y: frames[index].y }, { x: entry.x, y: entry.y });
+      assert.equal(sha256(entry.files[tier].url), entry.files[tier].sha256);
+    });
+    for (const name of ['blink-half', 'blink-closed']) {
+      assert.equal(manifest.blinks[name].files[tier].url, assetUrl(name, tier));
+      assert.equal(sha256(assetUrl(name, tier)), manifest.blinks[name].files[tier].sha256);
     }
-    assert.ok(manifest.blinkFrames.some((f: { name: string }) => assetUrl(f.name, tier).endsWith('/blink-closed.webp')));
   }
-  assert.equal(portraitConfig.neutral, assetUrl('gaze-r2-c2'));
-  assert.ok(readFileSync(new URL(`../public${portraitConfig.backgroundImage}`, import.meta.url)).length > 0);
+  assert.equal(gazeFrames('standard')[0].src, portraitConfig.neutral, 'neutral loads first');
+});
+
+test('kept frames are distinct, inside the viewer range and free of blink frames', () => {
+  const frames = gazeFrames('large');
+  for (const [index, frame] of frames.entries()) {
+    assert.ok(Math.abs(frame.x) <= 1 && Math.abs(frame.y) <= 1);
+    for (const other of frames.slice(index + 1)) assert.ok(poseDistance(frame, other) >= manifest.settings.minSpacing);
+  }
+  for (const entry of manifest.frames) assert.ok(!manifest.excludedForBlink.includes(entry.videoFrame));
+});
+
+test('the sampled ring covers every viewer direction without a gap wider than 45 degrees', () => {
+  const angles = gazeFrames('large').filter(frame => Math.hypot(frame.x, frame.y) > 0.5)
+    .map(frame => Math.atan2(frame.y, frame.x)).sort((a, b) => a - b);
+  const gaps = angles.map((angle, i) => (angles[(i + 1) % angles.length] - angle + 2 * Math.PI) % (2 * Math.PI));
+  assert.ok(Math.max(...gaps) < Math.PI / 4, `largest gap ${(Math.max(...gaps) * 180 / Math.PI).toFixed(1)}°`);
 });

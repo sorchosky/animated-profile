@@ -1,5 +1,5 @@
 import { portraitConfig, gazeFrames, assetUrl, type PortraitFrame, type ResolutionTier } from './config.ts';
-import { normalizePointer, selectFrame, smoothPoint, type Point } from './motion.ts';
+import { crossfadeDuration, normalizePointer, selectFrame, smoothPoint, type Point } from './motion.ts';
 import { createDecodeQueue } from './loading.ts';
 
 const stage = document.querySelector<HTMLElement>('[data-portrait-stage]');
@@ -12,13 +12,15 @@ if (stage && canvas && neutralImage && motionButton) {
   // Fix the tier for this page visit; resize never retains a second decoded set.
   const tier: ResolutionTier = window.matchMedia('(min-width: 900px) and (pointer: fine) and (hover: hover)').matches ? 'large' : 'standard';
   const supplied = gazeFrames(tier);
-  const neutral = supplied.find(frame => frame.x === 0 && frame.y === 0)!;
+  const neutral = supplied.find(frame => frame.src === assetUrl(portraitConfig.neutralName, tier))!;
   const frames: PortraitFrame[] = [neutral];
   const images = new Map<string, HTMLImageElement>([[neutral.src, neutralImage]]);
   const halfBlink = assetUrl('blink-half', tier);
   const closedBlink = assetUrl('blink-closed', tier);
   let currentFrame = neutral;
   let visibleImage = neutralImage;
+  let leavingImage: HTMLImageElement | null = null;
+  let fadeTimer = 0;
   let current: Point = { x: 0, y: 0 };
   let target: Point = { x: 0, y: 0 };
   let frameRequest = 0;
@@ -32,11 +34,26 @@ if (stage && canvas && neutralImage && motionButton) {
   let blinking = false;
   const enabled = () => !paused && !reducedMotion.matches && !document.hidden && inView && focused;
 
-  function showImage(src: string) {
+  function finishFade() {
+    window.clearTimeout(fadeTimer);
+    fadeTimer = 0;
+    leavingImage?.classList.remove('is-leaving');
+    leavingImage = null;
+  }
+
+  // Frames are opaque, so a crossfade only needs the outgoing frame on top, fading out.
+  function showImage(src: string, fadeMs = 0) {
     const next = images.get(src);
     if (!next || next === visibleImage) return;
+    finishFade();
     visibleImage.classList.remove('is-visible');
     next.classList.add('is-visible');
+    if (fadeMs > 0) {
+      leavingImage = visibleImage;
+      leavingImage.style.setProperty('--fade-ms', `${fadeMs}ms`);
+      leavingImage.classList.add('is-leaving');
+      fadeTimer = window.setTimeout(finishFade, fadeMs);
+    }
     visibleImage = next;
   }
 
@@ -70,8 +87,10 @@ if (stage && canvas && neutralImage && motionButton) {
   function render() {
     const next = selectFrame(frames, current, currentFrame, portraitConfig.frameMargin);
     if (next !== currentFrame) {
+      const fadeMs = crossfadeDuration(currentFrame, next, portraitConfig.crossfadeDistance, portraitConfig.crossfadeMs);
       cancelBlink();
       currentFrame = next;
+      showImage(currentFrame.src, fadeMs);
     }
     if (!blinking) showImage(currentFrame.src);
     scheduleBlink();
@@ -101,6 +120,7 @@ if (stage && canvas && neutralImage && motionButton) {
   function reset(immediate = false) {
     releasePointer();
     cancelBlink();
+    finishFade();
     target = { x: 0, y: 0 };
     if (immediate || !enabled()) {
       cancelAnimationFrame(frameRequest);
@@ -153,15 +173,16 @@ if (stage && canvas && neutralImage && motionButton) {
   motionButton.hidden = false;
   updateButton();
 
-  // Decode the immediate neighbors before the outer ring. Keep the SSR image
-  // usable during loading, including when the large neutral asset fails.
-  const directional = supplied.filter(frame => frame !== neutral).sort((a, b) =>
-    Math.max(Math.abs(a.x), Math.abs(a.y)) - Math.max(Math.abs(b.x), Math.abs(b.y)));
+  // The manifest is already ordered coarse-to-fine, so early decodes cover every
+  // direction and later ones fill the gaps. Keep the SSR image usable during
+  // loading, including when the large neutral asset fails.
+  const directional = supplied.filter(frame => frame !== neutral);
+  const coarse = portraitConfig.coarseFrameCount;
   const queue = [
     ...(tier === 'large' ? [{ src: neutral.src, frame: neutral }] : []),
-    ...directional.slice(0, 8).map(frame => ({ src: frame.src, frame })),
+    ...directional.slice(0, coarse).map(frame => ({ src: frame.src, frame })),
     { src: halfBlink, frame: undefined }, { src: closedBlink, frame: undefined },
-    ...directional.slice(8).map(frame => ({ src: frame.src, frame })),
+    ...directional.slice(coarse).map(frame => ({ src: frame.src, frame })),
   ];
   const loader = createDecodeQueue(queue, async ({ src, frame }) => {
     const image = new Image();
@@ -176,6 +197,7 @@ if (stage && canvas && neutralImage && motionButton) {
       images.set(src, image);
       if (frame && frame !== neutral) frames.push(frame);
       if (frame === neutral) {
+        if (leavingImage === neutralImage) finishFade();
         // Keep one accessible portrait; all other frames are decorative.
         image.alt = portraitConfig.alt;
         image.removeAttribute('aria-hidden');

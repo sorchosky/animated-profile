@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizePointer, selectFrame, smoothPoint } from '../src/portrait/motion.ts';
+import { crossfadeDuration, normalizePointer, selectFrame, smoothPoint } from '../src/portrait/motion.ts';
 
 test('screen coordinates map to directional assets and clamp captured drags outside the stage', () => {
   const bounds = { left: 20, top: 10, width: 200, height: 100 };
@@ -27,7 +27,7 @@ test('chooses portraits by screen direction and keeps a stable frame near bounda
   assert.equal(selectFrame(frames, { x: 1, y: 0 }), right);
   assert.equal(selectFrame(frames, { x: -0.9, y: -0.8 }), upperLeft);
   assert.equal(selectFrame(frames, { x: 0.505, y: 0 }, neutral), neutral);
-  assert.equal(selectFrame(frames, { x: 0.6, y: 0 }, neutral), right);
+  assert.equal(selectFrame(frames, { x: 0.52, y: 0 }, neutral), right);
   assert.equal(selectFrame([neutral], { x: 1, y: 1 }), neutral);
 });
 
@@ -40,14 +40,19 @@ test('tracking is centered at the drawn eye position, with independent distances
   assert.deepEqual(normalizePointer(875, 540, viewport, eye), { x: 0.5, y: 0.5 });
 });
 
-test('half-step poses are reachable without flickering around their boundaries', () => {
-  const frames = [-1, -0.5, 0, 0.5, 1].flatMap(y => [-1, -0.5, 0, 0.5, 1].map(x => ({ x, y, src: `${x}:${y}` })));
+test('dense neighboring frames switch promptly while the margin stops boundary flicker', () => {
+  const frames = [0, 0.05, 0.1, 0.15].map(x => ({ x, y: 0.8, src: String(x) }));
   for (const frame of frames) assert.equal(selectFrame(frames, frame), frame);
-  const neutral = frames[12];
-  const halfRight = frames[13];
-  assert.equal(selectFrame(frames, { x: 0.26, y: 0 }, neutral), neutral);
-  assert.equal(selectFrame(frames, { x: 0.29, y: 0 }, neutral), halfRight);
-  assert.equal(selectFrame(frames, { x: 0.24, y: 0 }, halfRight), halfRight);
-  assert.equal(selectFrame(frames, { x: 0.21, y: 0 }, halfRight), neutral);
-  assert.equal(selectFrame([neutral], { x: 1, y: 1 }, halfRight), neutral);
+  assert.equal(selectFrame(frames, { x: 0.03, y: 0.8 }, frames[0]), frames[0], 'inside the margin keeps the current frame');
+  assert.equal(selectFrame(frames, { x: 0.04, y: 0.8 }, frames[0]), frames[1]);
+  assert.equal(selectFrame(frames, { x: 0.15, y: 0.8 }, frames[0]), frames[3], 'never lags more than one step');
+  assert.equal(selectFrame([frames[0]], { x: 1, y: 1 }, frames[2]), frames[0]);
+});
+
+test('neighbors cut instantly and long jumps crossfade for a bounded, distance-scaled duration', () => {
+  const range = [70, 150] as const;
+  assert.equal(crossfadeDuration({ x: 0.8, y: 0 }, { x: 0.85, y: 0 }, 0.15, range), 0);
+  assert.equal(crossfadeDuration({ x: 0, y: 0 }, { x: 0.2, y: 0 }, 0.15, range), 70);
+  assert.equal(crossfadeDuration({ x: 0, y: 0 }, { x: 0.85, y: 0 }, 0.15, range), 128);
+  assert.equal(crossfadeDuration({ x: -0.85, y: 0 }, { x: 0.85, y: 0 }, 0.15, range), 150);
 });
