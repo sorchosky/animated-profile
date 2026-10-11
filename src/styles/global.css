@@ -1,52 +1,83 @@
+@import './tokens.css';
+
 :root {
   color-scheme: dark;
-  font-family: system-ui, sans-serif;
-  background: #4a4220;
-  /* Sampled from the video's backdrop: warm center falling off to olive edges. */
-  --backdrop-center: #5d5225;
-  --backdrop-mid: #544a21;
-  --backdrop-edge: #4a4220;
-  --backdrop-corner: #423b19;
+  background: var(--color-surface);
+  /* Full-page panels: each scroll gesture settles on the next panel. */
+  scroll-snap-type: y mandatory;
+}
+@media (prefers-reduced-motion: no-preference) {
+  :root { scroll-behavior: smooth; }
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--portrait-background); }
-.portrait-stage {
+body {
+  margin: 0;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, p { margin: 0; }
+
+.panel {
   position: relative;
-  width: 100%;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* ---------- Hero ---------- */
+
+/*
+ * Layers, back to front: vignette backdrop, masthead, portrait cutout, copy.
+ * --figure-h sizes the 3:2 portrait; the masthead and copy are placed relative to it
+ * so the head always overlaps the masthead, whatever the viewport.
+ */
+.hero {
+  --figure-h: min(66dvh, 140vw);
+  --figure-x: 50%;
+  /* Masthead bottom edge, as a fraction of figure height from the floor. Higher on mobile,
+     where the smaller type would otherwise disappear behind the face. */
+  --masthead-floor: 0.9;
   background:
-    radial-gradient(ellipse 70% 85% at 50% 30%, var(--backdrop-center) 0%, var(--backdrop-mid) 40%, var(--backdrop-edge) 72%, var(--backdrop-corner) 100%),
-    var(--portrait-background);
+    radial-gradient(ellipse calc(var(--figure-h) * 1.1) calc(var(--figure-h) * 0.95) at var(--figure-x) calc(100% - var(--figure-h) * 0.62),
+      var(--color-surface-center) 0%, var(--color-surface-mid) 38%, var(--color-surface) 70%, var(--color-surface-edge) 100%),
+    var(--color-surface-edge);
   touch-action: pan-y pinch-zoom;
   user-select: none;
   -webkit-user-select: none;
 }
+.masthead {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* The head always covers the lower part of the letters. */
+  bottom: calc(var(--figure-h) * var(--masthead-floor));
+  z-index: 1;
+  padding-inline: var(--gutter);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: calc((100vw - 2 * var(--gutter)) / var(--masthead-em));
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--color-text);
+}
 .portrait-canvas {
   position: absolute;
+  z-index: 2;
   bottom: 0;
-  left: 50%;
-  width: min(150dvh, 1536px);
+  left: var(--figure-x);
+  height: var(--figure-h);
   aspect-ratio: 3 / 2;
   transform: translateX(-50%);
   transform-origin: 50% 100%;
   pointer-events: none;
-}
-/* Continues the frame's top edge upward when the viewport is taller than the frame. */
-.portrait-canvas::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 94%;
-  height: 100dvh;
-  /* Column profile sampled from the video's clean backdrop plate, darkening upward. */
-  background:
-    linear-gradient(to top, transparent, rgb(66 59 25 / 60%) 70%),
-    linear-gradient(to right, #4b431f, #504922 8%, #544a20 16%, #5c5125 25%, #615527 33%, #625527 50%, #5d5226 66%, #564d23 75%, #534a23 83%, #4b431f 91%, #473f1c);
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
 }
 /* The page backdrop is outside this layer and never moves. */
 .portrait-canvas.is-animated { animation: breathe 5s ease-in-out infinite; }
@@ -54,43 +85,189 @@ body { margin: 0; background: var(--portrait-background); }
   0%, 100% { transform: translateX(-50%) scaleY(1); }
   50% { transform: translateX(-50%) scaleY(1.0015); }
 }
-@media (max-width: 600px) {
-  .portrait-canvas { width: min(150dvh, 170vw); }
-}
 .portrait-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  /* Video frames are opaque; feather the sides and top into the page backdrop. */
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 6%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 6%);
-  mask-composite: intersect;
   visibility: hidden;
   pointer-events: none;
 }
 .portrait-image.is-visible { visibility: visible; z-index: 1; }
-/* Opaque frames: the outgoing frame sits on top and fades to reveal the incoming one. */
+/* The outgoing frame sits on top and fades to reveal the incoming one. */
 .portrait-image.is-leaving { visibility: visible; z-index: 2; animation: frame-out var(--fade-ms, 120ms) linear forwards; }
 @keyframes frame-out { to { opacity: 0; } }
-.motion-toggle {
+
+.hero-copy {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--gutter) max(var(--space-5), env(safe-area-inset-bottom));
+  text-align: center;
+  /* Scrim keeps the tagline readable over the jacket on mobile. */
+  background: linear-gradient(to bottom, transparent, rgb(46 41 18 / 72%) 45%, rgb(46 41 18 / 88%));
+}
+.tagline {
+  max-width: 20ch;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--type-title-sm);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); }
+
+@media (min-width: 768px) {
+  .hero {
+    --figure-h: min(88dvh, 72vw);
+    --figure-x: 64%;
+    --masthead-floor: 0.7;
+  }
+  .hero-copy {
+    /* Left third, locked up directly under the masthead. */
+    top: calc(100% - var(--figure-h) * var(--masthead-floor) + var(--space-5));
+    right: auto;
+    bottom: auto;
+    width: clamp(21rem, 100% / 3 + var(--gutter), 34rem);
+    justify-items: start;
+    padding: 0 0 0 var(--gutter);
+    text-align: left;
+    background: none;
+  }
+  .tagline { font-size: clamp(var(--type-title-sm), 3.4vw, 3.25rem); }
+  .actions { justify-content: flex-start; }
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-pill);
+  font: 500 var(--type-body) / 1 var(--font-body);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+}
+.button:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+.button:active { transform: scale(0.97); }
+.button-primary { background: var(--color-action-primary); color: var(--color-on-action-primary); }
+.button-secondary { border-color: var(--color-action-secondary-border); color: var(--color-text); background: transparent; }
+@media (hover: hover) {
+  .button-primary:hover { background: var(--color-action-primary-hover); }
+  .button-secondary:hover { background: var(--color-action-secondary-hover); }
+}
+
+/* ---------- Section indicator ---------- */
+
+.section-dots {
   position: fixed;
-  right: max(20px, env(safe-area-inset-right));
-  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 10;
+  top: 50%;
+  right: max(var(--space-2), env(safe-area-inset-right));
+  transform: translateY(-50%);
+}
+.section-dots ol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.section-dots a {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-indicator-inactive);
+  transition: height var(--duration-base) var(--ease-out), background-color var(--duration-base) var(--ease-out);
+}
+/* Widens the hit area into the 8px gaps without changing the visual spacing. */
+.section-dots a::after { content: ''; position: absolute; inset: -4px -12px; }
+.section-dots a[aria-current='true'] { height: 24px; background: var(--color-indicator-active); }
+.section-dots a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+@media (min-width: 768px) {
+  .section-dots { right: max(var(--space-4), env(safe-area-inset-right)); }
+}
+
+/* ---------- Project panels ---------- */
+
+.project {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--space-4);
+  padding: var(--space-6) calc(var(--gutter) + var(--space-3)) var(--space-6) var(--gutter);
+  background: radial-gradient(ellipse 80% 70% at 50% 35%, var(--color-surface-mid), var(--color-surface) 60%, var(--color-surface-edge));
+}
+.project-visual { display: grid; place-items: center; min-height: 0; }
+.project-visual svg { width: min(100%, 560px); height: 100%; max-height: 100%; }
+.project-copy { display: grid; justify-items: start; gap: var(--space-2); max-width: 36rem; }
+.project-eyebrow {
+  font-size: var(--type-label);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.project-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 10vw, 6rem);
+  line-height: 1;
+  text-wrap: balance;
+}
+.project-subhead { font-size: var(--type-lead); line-height: 1.4; color: var(--color-text-muted); text-wrap: pretty; }
+.project-copy .button { margin-top: var(--space-2); }
+@media (min-width: 768px) {
+  .project {
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-8) calc(var(--gutter) + var(--space-6)) var(--space-8) var(--gutter);
+  }
+  .project-copy { order: -1; }
+  .project-visual svg { height: auto; max-height: 72dvh; }
+}
+
+/* Project animations run only while their panel is on screen. */
+.project .project-visual * { animation-play-state: paused; }
+.project.is-current .project-visual * { animation-play-state: running; }
+
+/* ---------- Utilities ---------- */
+
+.motion-toggle {
+  position: absolute;
+  z-index: 4;
+  top: max(var(--space-2), env(safe-area-inset-top));
+  right: max(var(--space-2), env(safe-area-inset-right));
   min-height: 44px;
   padding: 10px 17px;
-  border: 1px solid rgb(255 255 255 / 24%);
-  border-radius: 999px;
-  background: rgb(25 30 14 / 82%);
-  color: #fff;
+  border: 1px solid rgb(243 230 208 / 24%);
+  border-radius: var(--radius-pill);
+  background: rgb(46 41 18 / 82%);
+  color: var(--color-text);
   font: inherit;
   font-size: 12px;
   cursor: pointer;
 }
-.motion-toggle:hover { background: #252b1a; }
-.motion-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.motion-toggle:hover { background: var(--color-surface-deep); }
+.motion-toggle:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
 .motion-toggle:disabled { cursor: default; }
 .motion-toggle[hidden] { display: none; }
 .sr-only {
@@ -105,5 +282,6 @@ body { margin: 0; background: var(--portrait-background); }
   border: 0;
 }
 @media (prefers-reduced-motion: reduce) {
-  .portrait-canvas { animation: none !important; }
+  .portrait-canvas, .project-visual * { animation: none !important; }
+  .section-dots a, .button { transition: none; }
 }

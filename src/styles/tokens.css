@@ -1,0 +1,67 @@
+/* Design tokens. Primitives first, then semantic roles; components use roles only. */
+:root {
+  /* Primitives */
+  /* Warm cream drawn from the portrait's T-shirt, desaturated for type. 7.9:1 on olive-500. */
+  --cream-100: #f3e6d0;
+  /* Olive backdrop sampled from the gaze video, light center to dark corner. */
+  --olive-400: #655927;
+  --olive-450: #5a4f23;
+  --olive-500: #4a4220;
+  --olive-600: #3f3819;
+  --olive-700: #2e2912;
+  /* Burnt sienna. cream-100 on sienna-500 is 5.0:1 (AA for body text). */
+  --sienna-500: #9c4526;
+  --sienna-600: #85391e;
+
+  /* Semantic color roles */
+  --color-surface: var(--olive-500);
+  --color-surface-center: var(--olive-400);
+  --color-surface-mid: var(--olive-450);
+  --color-surface-edge: var(--olive-600);
+  --color-surface-deep: var(--olive-700);
+  --color-text: var(--cream-100);
+  --color-text-muted: rgb(243 230 208 / 78%);
+  --color-action-primary: var(--sienna-500);
+  --color-action-primary-hover: var(--sienna-600);
+  --color-on-action-primary: var(--cream-100);
+  --color-action-secondary-border: var(--cream-100);
+  --color-action-secondary-hover: rgb(243 230 208 / 12%);
+  --color-indicator-active: var(--cream-100);
+  /* Inactive dots stay legible (about 3:1) but recede behind the active state. */
+  --color-indicator-inactive: rgb(243 230 208 / 45%);
+  --color-focus: var(--cream-100);
+
+  /* Type */
+  --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  /* Advance width of "Steve Orchosky" in DM Serif Display, in em. Fits the masthead to the viewport. */
+  --masthead-em: 6.72;
+  --type-label: 0.8125rem;   /* 13 */
+  --type-body: 1rem;         /* 16 */
+  --type-lead: 1.25rem;      /* 20 */
+  --type-title-sm: 2rem;     /* 32 */
+
+  /* Space: 8pt grid */
+  --space-1: 0.5rem;  /* 8 */
+  --space-2: 1rem;    /* 16 */
+  --space-3: 1.5rem;  /* 24 */
+  --space-4: 2rem;    /* 32 */
+  --space-5: 2.5rem;  /* 40 */
+  --space-6: 3rem;    /* 48 */
+  --space-8: 4rem;    /* 64 */
+  --gutter: var(--space-2);
+
+  /* Shape, sizing, motion */
+  --radius-pill: 999px;
+  --control-height: 3rem; /* 48, above the 44px touch-target minimum */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+}
+
+@media (min-width: 768px) {
+  :root { --gutter: var(--space-5); }
+}
+@media (min-width: 1200px) {
+  :root { --gutter: var(--space-8); }
+}

@@ -8,7 +8,8 @@ export interface PortraitFrame {
 }
 
 export type ResolutionTier = 'standard' | 'large';
-export const assetUrl = (name: string, tier: ResolutionTier = 'standard') => `/portraits/gaze-video/${tier}/${name}.webp`;
+// Served frames are alpha cutouts of the gaze-video stills (scripts/cutout_frames.py), so page layers can sit behind the figure.
+export const assetUrl = (name: string, tier: ResolutionTier = 'standard') => `/portraits/cutout/${tier}/${name}.webp`;
 
 /** Frames arrive in load order: neutral first, then coarse-to-fine coverage of the pose range. */
 export function gazeFrames(tier: ResolutionTier): PortraitFrame[] {
