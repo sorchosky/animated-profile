@@ -1,36 +1,79 @@
 ---
 import { portraitConfig } from '../portrait/config';
+import { projects, resumeUrl } from '../content/projects';
+import ProjectVisual from '../components/ProjectVisual.astro';
+import Fonts from '../components/Fonts.astro';
 import '../styles/global.css';
+
+const sections = [{ id: 'intro', label: 'Intro' }, ...projects.map(({ slug, title }) => ({ id: slug, label: title }))];
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content={portraitConfig.background} />
-    <meta name="description" content="Steve Orchosky's interactive portrait." />
-    <title>Steve Orchosky — Animated Profile</title>
+    <meta name="description" content="Steve Orchosky designs brand systems, product UI, and the code that ships them." />
+    <title>Steve Orchosky | Product Designer</title>
+    <Fonts />
   </head>
-  <body style={`--portrait-background: ${portraitConfig.background}`}>
-    <main class="portrait-stage" data-portrait-stage aria-label="Steve Orchosky's interactive portrait">
-      <h1 class="sr-only">Steve Orchosky</h1>
-      <div class="portrait-canvas" data-portrait-canvas>
-        <img
-          class="portrait-image is-visible"
-          data-neutral-portrait
-          src={portraitConfig.neutral}
-          alt={portraitConfig.alt}
-          width={portraitConfig.width}
-          height={portraitConfig.height}
-          fetchpriority="high"
-          decoding="async"
-          draggable="false"
-        />
-      </div>
+  <body>
+    <main>
+      <section id="intro" class="panel hero" data-panel data-portrait-stage aria-label="Introduction">
+        <h1 class="masthead"><span>Steve</span> <span>Orchosky</span></h1>
+        <div class="portrait-canvas" data-portrait-canvas>
+          <img
+            class="portrait-image is-visible"
+            data-neutral-portrait
+            src={portraitConfig.neutral}
+            alt={portraitConfig.alt}
+            width={portraitConfig.width}
+            height={portraitConfig.height}
+            fetchpriority="high"
+            decoding="async"
+            draggable="false"
+          />
+        </div>
+        <div class="hero-copy">
+          <p class="tagline">Brand systems, product UI, and the code that ships them.</p>
+          <div class="actions">
+            <a class="button button-primary" href={`#${projects[0]!.slug}`}>View work</a>
+            <a class="button button-secondary" href={resumeUrl} target="_blank" rel="noopener">View resume</a>
+          </div>
+        </div>
+        <button class="motion-toggle" data-motion-toggle type="button" aria-pressed="false" hidden>Pause motion</button>
+      </section>
+
+      {projects.map((project, index) => (
+        <section id={project.slug} class="panel project" data-panel aria-labelledby={`${project.slug}-title`}>
+          <ProjectVisual kind={project.visual} />
+          <div class="project-copy">
+            <p class="project-meta">
+              <span class="sr-only">Project {index + 1} of {projects.length}: </span>{project.meta}
+            </p>
+            <h2 class="project-title" id={`${project.slug}-title`}>{project.title}</h2>
+            <p class="project-subhead">{project.subhead}</p>
+            <a class="button button-primary" href={`/work/${project.slug}/`}>
+              View project<span class="sr-only">: {project.title}</span>
+            </a>
+          </div>
+        </section>
+      ))}
     </main>
-    <button class="motion-toggle" data-motion-toggle type="button" aria-pressed="false" hidden>Pause motion</button>
+
+    <nav class="section-dots" aria-label="Sections">
+      <ol>
+        {sections.map((section, index) => (
+          <li>
+            <a href={`#${section.id}`} data-section-dot aria-current={index === 0 ? 'true' : 'false'} aria-label={section.label}></a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
     <script>
       import '../portrait/controller';
+      import '../scripts/sections';
     </script>
   </body>
 </html>

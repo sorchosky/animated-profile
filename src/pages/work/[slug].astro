@@ -1,0 +1,36 @@
+---
+import { projects } from '../../content/projects';
+import Fonts from '../../components/Fonts.astro';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  return projects.map(project => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+---
+<!doctype html>
+<html lang="en" class="case-study">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={project.subhead} />
+    <title>{project.title} | Steve Orchosky</title>
+    <Fonts />
+  </head>
+  <body>
+    <main class="case-study-shell">
+      <a class="button button-secondary" href={`/#${project.slug}`}>Back to work</a>
+      <p class="project-meta">{project.meta}</p>
+      <h1 class="project-title">{project.title}</h1>
+      <p class="project-subhead">{project.subhead}</p>
+      <p>Full case study coming soon.</p>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  /* Case studies scroll freely; only the home deck snaps. */
+  html.case-study { scroll-snap-type: none; }
+  .case-study-shell { display: grid; justify-items: start; gap: var(--space-3); max-width: 48rem; padding: var(--space-8) var(--gutter); }
+</style>

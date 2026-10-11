@@ -54,7 +54,22 @@ Fine-pointer, hover-capable screens at least 900 CSS pixels wide get large. Othe
 
 At most four assets decode at once. A failed image never enters selection, and pause or reduced motion stops queued work from starting. RequestAnimationFrame stops once the pointer target settles.
 
-The frames are opaque, with the video's own backdrop. Their sides and top are feathered into a page gradient sampled from a clean backdrop plate (the per-pixel median across the clip). A strip above the frame continues its top-edge colors, for viewports taller than 3:2.
+The page serves alpha cutouts from `public/portraits/cutout/`, so the masthead can sit between the backdrop and the figure. `scripts/cutout_frames.py` builds them from the opaque large-tier stills in `public/portraits/gaze-video/large` with rembg's `isnet-general-use` model, downscales the same matte for the standard tier, and records sizes and hashes in `docs/cutout/manifest.json`. Rerun it whenever the gaze frames are re-extracted:
+
+```sh
+pip install "rembg[cpu]" pillow
+python scripts/cutout_frames.py
+```
+
+## Page layout
+
+The home page is a deck of full-viewport panels: the hero, then one splash per project.
+
+- `src/styles/tokens.css` holds the primitives and semantic roles. `--color-text` (cream drawn from the T-shirt) is the type token used across the olive surfaces. `--color-action-primary` is burnt sienna.
+- The hero layers vignette backdrop, the `Steve Orchosky` masthead, the portrait, then the tagline and actions. The masthead (DM Serif Display) pins near the top and is fitted to the viewport width through `--masthead-em`, or `--masthead-em-stacked` when it breaks onto two lines below 768 px. `--figure-h` is solved from the masthead's bottom edge, so the hair only grazes the baseline (`--figure-overlap`). Copy is left-aligned at every size. Mobile centers the figure with the copy over a bottom scrim. From 768 px the figure moves to `--figure-x: 64%` and the copy locks up under the masthead in the left column.
+- Type is self-hosted through Fontsource: DM Serif Display for display, Geist for UI and body. The masthead face is preloaded.
+- Root `scroll-snap-type: y mandatory` handles touch, keyboard and scrollbar. `src/scripts/sections.ts` turns each wheel gesture into one panel step (locked through trackpad inertia), updates the section dots, runs only the current panel's animation and reveals its copy on arrival.
+- Project copy lives in `src/content/projects.ts`. Subheads are drafts and every `[TK]` is a number to replace. `src/components/ProjectVisual.astro` holds placeholder SVG motion studies, and `/work/<slug>/` pages are stubs. `/resume.pdf` is linked but not yet committed.
 
 ## Known limits
 

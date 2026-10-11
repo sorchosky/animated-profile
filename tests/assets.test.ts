@@ -6,6 +6,7 @@ import { gazeFrames, portraitConfig, assetUrl } from '../src/portrait/config.ts'
 import { poseDistance } from '../src/portrait/motion.ts';
 
 const manifest = JSON.parse(readFileSync(new URL('../docs/gaze-video/manifest.json', import.meta.url), 'utf8'));
+const cutouts = JSON.parse(readFileSync(new URL('../docs/cutout/manifest.json', import.meta.url), 'utf8'));
 const sha256 = (url: string) => createHash('sha256').update(readFileSync(new URL(`../public${url}`, import.meta.url))).digest('hex');
 
 test('both tiers ship every mapped video frame and the rebuilt blink pair with the documented hashes', () => {
@@ -13,13 +14,15 @@ test('both tiers ship every mapped video frame and the rebuilt blink pair with t
     const frames = gazeFrames(tier);
     assert.equal(frames.length, manifest.frames.length);
     manifest.frames.forEach((entry: any, index: number) => {
-      assert.equal(frames[index].src, entry.files[tier].url, 'load order matches the manifest');
+      const cutout = cutouts.files[entry.name][tier];
+      assert.equal(frames[index].src, cutout.url, 'load order matches the manifest');
       assert.deepEqual({ x: frames[index].x, y: frames[index].y }, { x: entry.x, y: entry.y });
-      assert.equal(sha256(entry.files[tier].url), entry.files[tier].sha256);
+      assert.equal(sha256(entry.files[tier].url), entry.files[tier].sha256, 'opaque source still matches');
+      assert.equal(sha256(cutout.url), cutout.sha256);
     });
     for (const name of ['blink-half', 'blink-closed']) {
-      assert.equal(manifest.blinks[name].files[tier].url, assetUrl(name, tier));
-      assert.equal(sha256(assetUrl(name, tier)), manifest.blinks[name].files[tier].sha256);
+      assert.equal(cutouts.files[name][tier].url, assetUrl(name, tier));
+      assert.equal(sha256(assetUrl(name, tier)), cutouts.files[name][tier].sha256);
     }
   }
   assert.equal(gazeFrames('standard')[0].src, portraitConfig.neutral, 'neutral loads first');

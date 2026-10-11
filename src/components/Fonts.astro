@@ -1,0 +1,9 @@
+---
+// Self-hosted through Fontsource: no third-party request, and Astro bundles the
+// woff2 files with hashed names. The masthead face is preloaded because its width
+// sets the hero layout.
+import '@fontsource/dm-serif-display/latin-400.css';
+import '@fontsource-variable/geist/wght.css';
+import mastheadFont from '@fontsource/dm-serif-display/files/dm-serif-display-latin-400-normal.woff2?url';
+---
+<link rel="preload" href={mastheadFont} as="font" type="font/woff2" crossorigin />
